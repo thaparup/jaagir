@@ -1,17 +1,23 @@
-// export async function createResume(prevState: unknown, formData: FormData) {
-//   try {
-//     const name = formData.get("fullname");
-//     console.log(name);
-//   } catch (error) {}
-// }
-
 "use server";
 
-import { BuilderSchemaType } from "@/schema/builder.schema";
+import prisma from "@/lib/prisma";
+import { ResumeSchemaType } from "@/schema/builder.schema";
 
-export const createResume = async (data: BuilderSchemaType) => {
-  console.log("Received resume data:", data);
+export const createResume = async (data: ResumeSchemaType) => {
+  try {
+    const newResume = await prisma.resume.create({
+      data: {
+        title: data.title,
+      },
+    });
 
-  // Optionally:
-  // await db.resume.create({ data })
+    return {
+      success: true,
+      message: "Resume created successfully!",
+      data: newResume,
+    };
+  } catch (error) {
+    console.error("Error creating resume:", error);
+    throw new Error("Failed to create resume");
+  }
 };

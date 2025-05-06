@@ -1,8 +1,9 @@
-import { User } from 'lucide-react'
+
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { cn } from '@/lib/utils'
 import { useFormContext } from 'react-hook-form'
+import { User } from 'phosphor-react'
 
 type Props = {}
 
@@ -11,19 +12,20 @@ const BasicSection = (props: Props) => {
 
     return (
         <>
-            <div className='flex gap-2 items-center'>
-                <User />
-                <h1 className='text-2xl'>Basics</h1>
+            <div className='flex gap-4 items-center pt-8'>
+                <User size={20} />
+
+                <h1 className='text-3xl font-semibold'>Basics</h1>
             </div>
 
-            <div className='flex items-center'>
-                <Avatar className={cn("h-12 w-12")}>
+            <div className='flex gap-4 items-center'>
+                <Avatar className={cn("h-16 w-16")}>
                     <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <div className='flex flex-col'>
+                <div className='flex flex-col gap-2 w-full'>
                     <span className='text-md font-medium'>Picture</span>
-                    <input type="text" placeholder='https://' className='outline-1 outline-gray-700/80 focus:outline-white rounded-sm text-sm placeholder:text-gray-600 p-1' />
+                    <input type="text" placeholder='https://' className='w-full outline-1 outline-gray-700/80 focus:outline-white rounded-sm text-sm placeholder:text-gray-600 p-1' />
                 </div>
             </div>
             <div className='flex flex-col gap-2'>

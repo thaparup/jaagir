@@ -13,3 +13,9 @@ export const BuilderSchema = z.object({
 });
 
 export type BuilderSchemaType = z.infer<typeof BuilderSchema>;
+
+export const ResumeSchema = z.object({
+  title: z.string().nonempty("Your Resume need to have the title"),
+});
+
+export type ResumeSchemaType = z.infer<typeof ResumeSchema>;
