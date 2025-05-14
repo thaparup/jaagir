@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
 import { Plus, Loader2 } from 'lucide-react'
@@ -8,6 +9,7 @@ import { createResume } from '@/actions/builder.action'
 import { Button } from './ui/button'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 type Props = {
     openModal: boolean,
@@ -15,6 +17,7 @@ type Props = {
 }
 
 const CreateResumeModal = ({ openModal, setOpenModal }: Props) => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -39,6 +42,7 @@ const CreateResumeModal = ({ openModal, setOpenModal }: Props) => {
 
             setOpenModal(false)
             reset()
+            router.push(`/builder/${data.data.id}`)
         },
         onError: () => {
             toast.error('Failed to create resume')

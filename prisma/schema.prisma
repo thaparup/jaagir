@@ -15,14 +15,15 @@ datasource db {
 }
 
 model Resume {
-  id          String   @id @default(cuid())
-  title       String
-  picture     String?
-  fullName    String?
-  headLine    String?
-  email       String?
-  website     String?
-  phoneNumber Int?
-  location    String?
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(cuid())
+  title            String
+  picture          String?
+  fullName         String?
+  headLine         String?
+  email            String?
+  website          String?
+  phoneNumber      Int?
+  location         String?
+  basicCustomField Json?
+  updatedAt        DateTime @updatedAt
 }
