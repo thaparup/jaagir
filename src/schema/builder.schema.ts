@@ -19,13 +19,15 @@ export const ResumeSchema = z.object({
     })
     .nullable(),
   location: z.string().nullable(),
-  basicCustomField: z.array(BasicCustomFieldType),
+  // basicCustomField: z.array(BasicCustomFieldType),
+  basicCustomField: z.array(BasicCustomFieldType).nullable(),
 });
 
 export type ResumeSchemaType = z.infer<typeof ResumeSchema>;
+export const ResumeResponseSchema = z.object({
+  success: z.boolean(),
+  message: z.string(),
+  data: ResumeSchema.nullable(),
+});
 
-// export const ResumeSchema = z.object({
-//   title: z.string().nonempty("Your Resume need to have the title"),
-// });
-
-// export type ResumeSchemaType = z.infer<typeof ResumeSchema>;
+export type ResumeResponseSchemaType = z.infer<typeof ResumeResponseSchema>;

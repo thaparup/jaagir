@@ -88,6 +88,7 @@ const BasicSection = () => {
             </div>
 
             <CustomFieldsForm />
+
         </>
     );
 };
