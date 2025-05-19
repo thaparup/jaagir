@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { ResumeSchemaType } from "@/schema/builder.schema";
-
+import * as LucideIcons from "lucide-react";
 // export const fetchResumeById = async (resumeId: string) => {
 //   try {
 //     const resume = await prisma.resume.findUnique({ where: { id: resumeId } });
@@ -66,20 +66,6 @@ export const fetchResumeById = async (
             "name" in item &&
             "value" in item
           ) {
-            // validated.push({
-            //                 icon:
-            //                     typeof item.icon === "string"
-            //                         ? item.icon
-            //                         : String(item.icon || ""),
-            //                 name:
-            //                     typeof item.name === "string"
-            //                         ? item.name
-            //                         : String(item.name || ""),
-            //                 value:
-            //                     typeof item.value === "string"
-            //                         ? item.value
-            //                         : String(item.value || ""),
-            //             });
             validated.push({
               icon: typeof item.icon === "string" ? item.icon : "",
               name: typeof item.name === "string" ? item.name : "",

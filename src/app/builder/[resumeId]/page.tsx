@@ -1,6 +1,9 @@
 "use client";
 import { fetchResumeById, updateResume } from "@/actions/builder.action";
-import { ResumeResponseSchemaType, ResumeSchemaType } from "@/schema/builder.schema";
+import {
+    ResumeResponseSchemaType,
+    ResumeSchemaType,
+} from "@/schema/builder.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -9,6 +12,13 @@ import { toast } from "sonner";
 import isEqual from "fast-deep-equal";
 import BasicSection from "@/components/BuilderForm/BasicSection";
 import { useFormStore } from "@/store/zustand/formStore";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
+import { AtSign, Link, MapPinCheckInside, Phone, Tally1 } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import CustomFieldsSection from "@/components/CustomFieldsSection";
+import ResumeLive from "@/components/ResumeLive";
 
 const Page = () => {
     const params = useParams() as { resumeId: string };
@@ -17,9 +27,11 @@ const Page = () => {
     const [originalData, setOriginalData] = useState<ResumeSchemaType | null>(
         null
     );
-    const [isSaving, setIsSaving] = useState<boolean>(false)
-    const mutationTimer = useRef<NodeJS.Timeout | null>(null)
-    const builderHandleFormChange = useFormStore(state => state.setHandleBuilderFormChange);
+    const [isSaving, setIsSaving] = useState<boolean>(false);
+    const mutationTimer = useRef<NodeJS.Timeout | null>(null);
+    const builderHandleFormChange = useFormStore(
+        (state) => state.setHandleBuilderFormChange
+    );
     const methods = useForm<ResumeSchemaType>({
         defaultValues: {},
     });
@@ -51,41 +63,37 @@ const Page = () => {
                 `Error updating resume: ${error instanceof Error ? error.message : "Unknown error"
                 }`
             );
-
         },
     });
 
     useEffect(() => {
         if (resume) {
-            reset(resume.data!)
-            setOriginalData(resume.data)
+            reset(resume.data!);
+            setOriginalData(resume.data);
         }
-    }, [resume])
+    }, [resume]);
 
     const handleFormChange = () => {
-
-        setIsSaving(true)
+        setIsSaving(true);
 
         if (mutationTimer.current) {
-            clearTimeout(mutationTimer.current)
+            clearTimeout(mutationTimer.current);
         }
 
-        const currentFormValues = getValues()
+        const currentFormValues = getValues();
 
-        const isThereDifferenceBetweenTheOriginalDataAndTheCurrentFormValues = isEqual(originalData, currentFormValues)
-
+        const isThereDifferenceBetweenTheOriginalDataAndTheCurrentFormValues =
+            isEqual(originalData, currentFormValues);
 
         mutationTimer.current = setTimeout(() => {
-            setIsSaving(false)
+            setIsSaving(false);
             if (!isThereDifferenceBetweenTheOriginalDataAndTheCurrentFormValues) {
-                updateMutation.mutate(currentFormValues)
+                updateMutation.mutate(currentFormValues);
             }
-
-        }, 4000)
-    }
+        }, 4000);
+    };
     useEffect(() => {
         builderHandleFormChange(handleFormChange);
-
     }, [handleFormChange, builderHandleFormChange]);
 
     if (isLoading) {
@@ -106,22 +114,25 @@ const Page = () => {
     }
 
     return (
-        <div className="bg-black text-white">
+        <div className="bg-black text-white flex">
             {isSaving && (
                 <div className="fixed top-4 right-4 bg-blue-500 text-white py-1 px-3 rounded-md">
                     Saving changes...
                 </div>
             )}
             <FormProvider {...methods}>
-                <form className="space-y-6 pb-10" onInput={handleFormChange}>
+                <form className="space-y-6 pb-10 w-[40%]" onInput={handleFormChange}>
                     <BasicSection />
                 </form>
             </FormProvider>
+
+            <div className="flex flex-col gap-8 w-full">
+                <Button>Drawer</Button>
+                {resume && <ResumeLive resume={resume} />}
+
+            </div>
         </div>
     );
 };
 
 export default Page;
-
-
-

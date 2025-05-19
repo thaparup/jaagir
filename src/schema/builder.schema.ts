@@ -1,6 +1,9 @@
 import { z } from "zod";
+import * as PhosphorIcons from "phosphor-react";
 
+const phosphorIconNames = Object.keys(PhosphorIcons);
 const BasicCustomFieldType = z.object({
+  // icon: z.enum([...phosphorIconNames] as [string, ...string[]]),
   icon: z.string(),
   name: z.string(),
   value: z.string(),
@@ -8,19 +11,16 @@ const BasicCustomFieldType = z.object({
 
 export const ResumeSchema = z.object({
   title: z.string().nonempty("Your Resume need to have the title"),
-  picture: z.string().nullable(),
-  fullName: z.string().nullable(),
-  headLine: z.string().nullable(),
-  email: z.string().email().nullable(),
-  website: z.string().url("Invalid URL").nullable(),
-  phoneNumber: z.coerce
-    .number({
-      invalid_type_error: "Phone number must be a number",
-    })
-    .nullable(),
-  location: z.string().nullable(),
-  // basicCustomField: z.array(BasicCustomFieldType),
-  basicCustomField: z.array(BasicCustomFieldType).nullable(),
+  picture: z.string(),
+  fullName: z.string(),
+  headLine: z.string(),
+  email: z.string().email(),
+  website: z.string().url("Invalid URL"),
+  phoneNumber: z.coerce.number({
+    invalid_type_error: "Phone number must be a number",
+  }),
+  location: z.string(),
+  basicCustomField: z.array(BasicCustomFieldType),
 });
 
 export type ResumeSchemaType = z.infer<typeof ResumeSchema>;
