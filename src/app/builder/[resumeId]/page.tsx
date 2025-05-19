@@ -19,7 +19,7 @@ import { AtSign, Link, MapPinCheckInside, Phone, Tally1 } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import CustomFieldsSection from "@/components/CustomFieldsSection";
 import ResumeLive from "@/components/ResumeLive";
-
+import CVDrawer from "@/components/CVDrawer/CVDrawer";
 const Page = () => {
     const params = useParams() as { resumeId: string };
     const resumeId = params.resumeId;
@@ -127,7 +127,7 @@ const Page = () => {
             </FormProvider>
 
             <div className="flex flex-col gap-8 w-full">
-                <Button>Drawer</Button>
+                <CVDrawer />
                 {resume && <ResumeLive resume={resume} />}
 
             </div>

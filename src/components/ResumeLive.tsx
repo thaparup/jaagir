@@ -85,6 +85,12 @@ const ResumeLive = ({ resume }: Props) => {
                         )}
                 </div>
             </div>
+            <div className='flex flex-col gap-1 px-8 z-[200]'
+
+
+            >
+                <label htmlFor="" className='text-white font-medium'>Primary Color</label>
+            </div>
         </div>
     )
 }
