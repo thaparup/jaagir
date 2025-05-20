@@ -20,6 +20,7 @@ import * as LucideIcons from "lucide-react";
 import CustomFieldsSection from "@/components/CustomFieldsSection";
 import ResumeLive from "@/components/ResumeLive";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
+import useResumeGlobalStyle from "@/store/zustand/resumeGlobalStyleStore";
 const Page = () => {
     const params = useParams() as { resumeId: string };
     const resumeId = params.resumeId;
@@ -32,6 +33,9 @@ const Page = () => {
     const builderHandleFormChange = useFormStore(
         (state) => state.setHandleBuilderFormChange
     );
+
+
+
     const methods = useForm<ResumeSchemaType>({
         defaultValues: {},
     });
