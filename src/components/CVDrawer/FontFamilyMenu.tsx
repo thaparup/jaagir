@@ -1,15 +1,16 @@
-
 'use client'
 
 import React, { useEffect, useState } from 'react'
 import { Check, Search, X } from 'lucide-react'
 import useResumeGlobalStyle from '@/store/zustand/resumeGlobalStyleStore'
-// update this import path as needed
 
 type FontFamily = {
     family: string
     category: string
     variants: string[]
+    files: {
+        [variant: string]: string
+    }
 }
 
 const FontFamilyMenu = () => {
@@ -23,17 +24,17 @@ const FontFamilyMenu = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedFont, setSelectedFont] = useState<string | null>(null)
+    const [selectedFont, setSelectedFont] = useState<{ name: string; regularUrl: string | null } | null>(null)
     const [isOpen, setIsOpen] = useState(false)
     const [page, setPage] = useState(0)
 
     const fontsPerPage = 20
 
-    // Fetch fonts from Google Fonts API
     const fetchFonts = async () => {
         try {
             setLoading(true)
             setError(null)
+
             const response = await fetch(
                 `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&sort=popularity`
             )
@@ -43,10 +44,16 @@ const FontFamilyMenu = () => {
                 setFonts(res.items)
                 setFilteredFonts(res.items)
 
-                // If no font has been selected yet, initialize from Zustand
                 if (!selectedFont) {
-                    const foundFont = res.items.find((f: FontFamily) => f.family === globalFontFamily)
-                    setSelectedFont(foundFont ? foundFont.family : res.items[0].family)
+                    const foundFont = res.items.find((f: FontFamily) => f.family === globalFontFamily.name)
+                    const fallbackFont = res.items[0]
+
+                    const selected = foundFont || fallbackFont
+
+                    setSelectedFont({
+                        name: selected.family,
+                        regularUrl: selected.files['regular'] || null,
+                    })
                 }
             } else {
                 setError('Invalid API response format')
@@ -59,12 +66,10 @@ const FontFamilyMenu = () => {
         }
     }
 
-    // Load fonts on mount
     useEffect(() => {
         fetchFonts()
     }, [])
 
-    // Filter fonts
     useEffect(() => {
         if (searchTerm.trim() === '') {
             setFilteredFonts(fonts)
@@ -78,38 +83,37 @@ const FontFamilyMenu = () => {
         }
     }, [searchTerm, fonts])
 
-    // Dynamically inject font CSS
     useEffect(() => {
-        if (selectedFont) {
-            const link = document.createElement('link')
-            link.rel = 'stylesheet'
-            const fontForUrl = selectedFont.replace(/\s+/g, '+')
-            link.href = `https://fonts.googleapis.com/css2?family=${fontForUrl}:wght@400;700&display=swap`
+        if (selectedFont?.name && selectedFont.regularUrl) {
+            const fontName = selectedFont.name
+            const fontUrl = selectedFont.regularUrl
 
-            const existingLinks = document.querySelectorAll('link[href*="fonts.googleapis.com/css2"]')
-            if (existingLinks.length > 3) {
-                existingLinks[0].remove()
-            }
+            const style = document.createElement('style')
+            style.setAttribute('data-font', fontName)
+            style.innerHTML = `
+        @font-face {
+          font-family: '${fontName}';
+          src: url('${fontUrl}');
+          font-weight: 400;
+          font-style: normal;
+        }
+      `
 
-            document.head.appendChild(link)
+            const existingStyle = document.querySelector(`style[data-font="${fontName}"]`)
+            if (!existingStyle) document.head.appendChild(style)
 
-            // Sync selected font to global state
-            setGlobalFontFamily(selectedFont)
+            setGlobalFontFamily(fontName, fontUrl)
         }
     }, [selectedFont, setGlobalFontFamily])
 
-    const handleFontSelect = (fontFamily: string) => {
-        setSelectedFont(fontFamily)
+    const handleFontSelect = (font: FontFamily) => {
+        const regularUrl = font.files['regular'] || null
+        setSelectedFont({ name: font.family, regularUrl })
         setIsOpen(false)
     }
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen)
-    }
-
-    const clearSearch = () => {
-        setSearchTerm('')
-    }
+    const toggleMenu = () => setIsOpen(!isOpen)
+    const clearSearch = () => setSearchTerm('')
 
     const totalPages = Math.ceil(filteredFonts.length / fontsPerPage)
     const displayedFonts = filteredFonts.slice(page * fontsPerPage, (page + 1) * fontsPerPage)
@@ -118,15 +122,15 @@ const FontFamilyMenu = () => {
         <div className="max-w-md mx-auto p-4 bg-gray-800 rounded-lg">
             <h2 className="text-xl mb-4 text-white font-bold">Font Family Selector</h2>
 
-            {selectedFont && (
+            {selectedFont?.name && (
                 <div className="mb-6 p-4 border border-gray-600 rounded-lg bg-gray-700">
                     <p className="text-gray-300 mb-2">
-                        Current Font: <span className="text-white">{selectedFont}</span>
+                        Current Font: <span className="text-white">{selectedFont.name}</span>
                     </p>
-                    <p className="text-xl text-white" style={{ fontFamily: selectedFont }}>
+                    <p className="text-xl text-white" style={{ fontFamily: selectedFont.name }}>
                         The quick brown fox jumps over the lazy dog.
                     </p>
-                    <p className="text-sm text-white mt-2" style={{ fontFamily: selectedFont }}>
+                    <p className="text-sm text-white mt-2" style={{ fontFamily: selectedFont.name }}>
                         ABCDEFGHIJKLMNOPQRSTUVWXYZ
                         abcdefghijklmnopqrstuvwxyz
                         0123456789
@@ -134,15 +138,14 @@ const FontFamilyMenu = () => {
                 </div>
             )}
 
-            {/* Font Dropdown */}
             <div className="relative mb-4">
                 <button
                     onClick={toggleMenu}
                     className="flex items-center justify-between w-full p-3 text-left border border-gray-600 rounded-lg bg-gray-700 text-white hover:bg-gray-600 transition"
                     disabled={loading || fonts.length === 0}
                 >
-                    <span style={{ fontFamily: selectedFont || undefined }}>
-                        {selectedFont || (loading ? 'Loading fonts...' : 'Select a font')}
+                    <span style={{ fontFamily: selectedFont?.name || undefined }}>
+                        {selectedFont?.name || (loading ? 'Loading fonts...' : 'Select a font')}
                     </span>
                     <svg
                         className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
@@ -188,7 +191,7 @@ const FontFamilyMenu = () => {
                                 displayedFonts.map((font) => (
                                     <button
                                         key={font.family}
-                                        onClick={() => handleFontSelect(font.family)}
+                                        onClick={() => handleFontSelect(font)}
                                         className="flex items-center justify-between w-full px-4 py-3 text-left hover:bg-gray-600 border-b border-gray-600 transition"
                                     >
                                         <div>
@@ -199,7 +202,7 @@ const FontFamilyMenu = () => {
                                                 {font.category} • {font.variants.length} variant{font.variants.length !== 1 ? 's' : ''}
                                             </span>
                                         </div>
-                                        {selectedFont === font.family && (
+                                        {selectedFont?.name === font.family && (
                                             <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
                                         )}
                                     </button>
@@ -222,8 +225,7 @@ const FontFamilyMenu = () => {
                                 <button
                                     onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                                     disabled={page >= totalPages - 1}
-                                    className={`px-3 py-1 rounded ${page >= totalPages - 1 ? 'text-gray-500' : 'text-white hover:bg-gray-600'
-                                        }`}
+                                    className={`px-3 py-1 rounded ${page >= totalPages - 1 ? 'text-gray-500' : 'text-white hover:bg-gray-600'}`}
                                 >
                                     Next
                                 </button>
