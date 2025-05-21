@@ -42,7 +42,7 @@ const CVDrawer = (props: Props) => {
                 <BgColorInput />
                 <TextColorInput />
                 <FontFamilyMenu />
-
+                <h1 className="py-80">f</h1>
                 <DrawerFooter>
                     <Button>Submit</Button>
                     <DrawerClose>

@@ -2,7 +2,7 @@
 
 import useResumeGlobalStyle from "@/store/zustand/resumeGlobalStyleStore";
 
-function FontSizeSlider({ min = 8, max = 30, step = 1 }) {
+function FontSizeSlider({ min = 12, max = 18, step = 0.01 }) {
     const { fontSize, setFontSize } = useResumeGlobalStyle();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFontSize(Number(e.target.value));

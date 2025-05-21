@@ -1,3 +1,4 @@
+
 "use client";
 import { fetchResumeById, updateResume } from "@/actions/builder.action";
 import {
@@ -12,15 +13,8 @@ import { toast } from "sonner";
 import isEqual from "fast-deep-equal";
 import BasicSection from "@/components/BuilderForm/BasicSection";
 import { useFormStore } from "@/store/zustand/formStore";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
-import { AtSign, Link, MapPinCheckInside, Phone, Tally1 } from "lucide-react";
-import * as LucideIcons from "lucide-react";
-import CustomFieldsSection from "@/components/CustomFieldsSection";
-import ResumeLive from "@/components/ResumeLive";
+import ResumePreview from "@/components/ResumePreview";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
-import useResumeGlobalStyle from "@/store/zustand/resumeGlobalStyleStore";
 const Page = () => {
     const params = useParams() as { resumeId: string };
     const resumeId = params.resumeId;
@@ -28,13 +22,14 @@ const Page = () => {
     const [originalData, setOriginalData] = useState<ResumeSchemaType | null>(
         null
     );
+    const [currentLiveResumeData, setCurrentLiveResumeData] =
+        useState<ResumeSchemaType | null>(null);
+
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const mutationTimer = useRef<NodeJS.Timeout | null>(null);
     const builderHandleFormChange = useFormStore(
         (state) => state.setHandleBuilderFormChange
     );
-
-
 
     const methods = useForm<ResumeSchemaType>({
         defaultValues: {},
@@ -43,7 +38,7 @@ const Page = () => {
     const { getValues, reset } = methods;
 
     const {
-        data: resume,
+        data: fetchedResumeData,
         isLoading,
         error,
     } = useQuery<ResumeResponseSchemaType>({
@@ -59,7 +54,6 @@ const Page = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["resumeById", resumeId] });
             toast.success("Resume updated successfully");
-
             setOriginalData(getValues());
         },
         onError: (error) => {
@@ -71,11 +65,11 @@ const Page = () => {
     });
 
     useEffect(() => {
-        if (resume) {
-            reset(resume.data!);
-            setOriginalData(resume.data);
+        if (fetchedResumeData) {
+            reset(fetchedResumeData.data!);
+            setOriginalData(fetchedResumeData.data);
         }
-    }, [resume]);
+    }, [fetchedResumeData, reset]);
 
     const handleFormChange = () => {
         setIsSaving(true);
@@ -85,6 +79,9 @@ const Page = () => {
         }
 
         const currentFormValues = getValues();
+
+
+        setCurrentLiveResumeData(currentFormValues);
 
         const isThereDifferenceBetweenTheOriginalDataAndTheCurrentFormValues =
             isEqual(originalData, currentFormValues);
@@ -96,9 +93,19 @@ const Page = () => {
             }
         }, 4000);
     };
+
     useEffect(() => {
         builderHandleFormChange(handleFormChange);
     }, [handleFormChange, builderHandleFormChange]);
+
+
+
+
+    useEffect(() => {
+        if (fetchedResumeData?.data) {
+            setCurrentLiveResumeData(fetchedResumeData.data);
+        }
+    }, [fetchedResumeData]);
 
     if (isLoading) {
         return (
@@ -118,25 +125,31 @@ const Page = () => {
     }
 
     return (
-        <div className="bg-black text-white flex">
+        <div className="bg-black text-white flex gap-8">
             {isSaving && (
                 <div className="fixed top-4 right-4 bg-blue-500 text-white py-1 px-3 rounded-md">
                     Saving changes...
                 </div>
             )}
             <FormProvider {...methods}>
-                <form className="space-y-6 pb-10 w-[40%]" onInput={handleFormChange}>
+                <form className="space-y-6 pb-10 w-[40%]" onChange={handleFormChange}>
                     <BasicSection />
+
                 </form>
             </FormProvider>
 
             <div className="flex flex-col gap-8 w-full">
                 <CVDrawer />
-                {resume && <ResumeLive resume={resume} />}
-
+                {currentLiveResumeData && (
+                    <ResumePreview resume={{ data: currentLiveResumeData } as ResumeResponseSchemaType} />
+                )}
             </div>
         </div>
     );
 };
 
 export default Page;
+
+
+
+

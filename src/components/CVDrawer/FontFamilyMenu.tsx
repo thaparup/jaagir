@@ -1,131 +1,132 @@
+
 'use client'
 
 import React, { useEffect, useState } from 'react'
 import { Check, Search, X } from 'lucide-react'
+import useResumeGlobalStyle from '@/store/zustand/resumeGlobalStyleStore'
+// update this import path as needed
 
 type FontFamily = {
-    family: string;
-    category: string;
-    variants: string[];
+    family: string
+    category: string
+    variants: string[]
 }
 
-type Props = {}
+const FontFamilyMenu = () => {
+    const {
+        fontFamily: globalFontFamily,
+        setFontFamily: setGlobalFontFamily,
+    } = useResumeGlobalStyle()
 
-const FontFamilyMenu = (props: Props) => {
-    const [fonts, setFonts] = useState<FontFamily[]>([]);
-    const [filteredFonts, setFilteredFonts] = useState<FontFamily[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedFont, setSelectedFont] = useState<string | null>(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [page, setPage] = useState(0);
-    const fontsPerPage = 20;
+    const [fonts, setFonts] = useState<FontFamily[]>([])
+    const [filteredFonts, setFilteredFonts] = useState<FontFamily[]>([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedFont, setSelectedFont] = useState<string | null>(null)
+    const [isOpen, setIsOpen] = useState(false)
+    const [page, setPage] = useState(0)
+
+    const fontsPerPage = 20
 
     // Fetch fonts from Google Fonts API
     const fetchFonts = async () => {
-        console.log('API Key:', process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
         try {
-            setLoading(true);
-            setError(null);
-            const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&sort=popularity`);
-
-            const res = await response.json();
+            setLoading(true)
+            setError(null)
+            const response = await fetch(
+                `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&sort=popularity`
+            )
+            const res = await response.json()
 
             if (res.items && Array.isArray(res.items)) {
-                setFonts(res.items);
-                setFilteredFonts(res.items);
-                // Set default selected font to first one
-                if (res.items.length > 0 && !selectedFont) {
-                    setSelectedFont(res.items[0].family);
+                setFonts(res.items)
+                setFilteredFonts(res.items)
+
+                // If no font has been selected yet, initialize from Zustand
+                if (!selectedFont) {
+                    const foundFont = res.items.find((f: FontFamily) => f.family === globalFontFamily)
+                    setSelectedFont(foundFont ? foundFont.family : res.items[0].family)
                 }
             } else {
-                setError('Invalid API response format');
+                setError('Invalid API response format')
             }
         } catch (error) {
-            console.error(error);
-            setError('Failed to fetch fonts. Please try again.');
+            console.error(error)
+            setError('Failed to fetch fonts. Please try again.')
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
-    // Load fonts on component mount
+    // Load fonts on mount
     useEffect(() => {
-        fetchFonts();
-    }, []);
+        fetchFonts()
+    }, [])
 
-    // Filter fonts when search term changes
+    // Filter fonts
     useEffect(() => {
         if (searchTerm.trim() === '') {
-            setFilteredFonts(fonts);
-            setPage(0);
+            setFilteredFonts(fonts)
+            setPage(0)
         } else {
-            const filtered = fonts.filter(font =>
+            const filtered = fonts.filter((font) =>
                 font.family.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            setFilteredFonts(filtered);
-            setPage(0);
+            )
+            setFilteredFonts(filtered)
+            setPage(0)
         }
-    }, [searchTerm, fonts]);
+    }, [searchTerm, fonts])
 
-    // Load font CSS dynamically
+    // Dynamically inject font CSS
     useEffect(() => {
         if (selectedFont) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            // Convert spaces to + for URL
-            const fontForUrl = selectedFont.replace(/\s+/g, '+');
-            link.href = `https://fonts.googleapis.com/css2?family=${fontForUrl}:wght@400;700&display=swap`;
+            const link = document.createElement('link')
+            link.rel = 'stylesheet'
+            const fontForUrl = selectedFont.replace(/\s+/g, '+')
+            link.href = `https://fonts.googleapis.com/css2?family=${fontForUrl}:wght@400;700&display=swap`
 
-            // Remove any previous font links to avoid overloading the DOM
-            const existingLinks = document.querySelectorAll('link[href*="fonts.googleapis.com/css2"]');
-            if (existingLinks.length > 3) { // Keep a few recent ones for smoother transitions
-                existingLinks[0].remove();
+            const existingLinks = document.querySelectorAll('link[href*="fonts.googleapis.com/css2"]')
+            if (existingLinks.length > 3) {
+                existingLinks[0].remove()
             }
 
-            document.head.appendChild(link);
+            document.head.appendChild(link)
+
+            // Sync selected font to global state
+            setGlobalFontFamily(selectedFont)
         }
-    }, [selectedFont]);
-    console.log(selectedFont)
+    }, [selectedFont, setGlobalFontFamily])
+
     const handleFontSelect = (fontFamily: string) => {
-        setSelectedFont(fontFamily);
-        setIsOpen(false);
-    };
+        setSelectedFont(fontFamily)
+        setIsOpen(false)
+    }
 
     const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+        setIsOpen(!isOpen)
+    }
 
     const clearSearch = () => {
-        setSearchTerm('');
-    };
+        setSearchTerm('')
+    }
 
-    // Calculate pagination
-    const totalPages = Math.ceil(filteredFonts.length / fontsPerPage);
-    const displayedFonts = filteredFonts.slice(
-        page * fontsPerPage,
-        (page + 1) * fontsPerPage
-    );
+    const totalPages = Math.ceil(filteredFonts.length / fontsPerPage)
+    const displayedFonts = filteredFonts.slice(page * fontsPerPage, (page + 1) * fontsPerPage)
 
     return (
         <div className="max-w-md mx-auto p-4 bg-gray-800 rounded-lg">
             <h2 className="text-xl mb-4 text-white font-bold">Font Family Selector</h2>
 
-            {/* Font Preview Section */}
             {selectedFont && (
                 <div className="mb-6 p-4 border border-gray-600 rounded-lg bg-gray-700">
-                    <p className="text-gray-300 mb-2">Current Font: <span className="text-white">{selectedFont}</span></p>
-                    <p
-                        className="text-xl text-white"
-                        style={{ fontFamily: selectedFont }}
-                    >
+                    <p className="text-gray-300 mb-2">
+                        Current Font: <span className="text-white">{selectedFont}</span>
+                    </p>
+                    <p className="text-xl text-white" style={{ fontFamily: selectedFont }}>
                         The quick brown fox jumps over the lazy dog.
                     </p>
-                    <p
-                        className="text-sm text-white mt-2"
-                        style={{ fontFamily: selectedFont }}
-                    >
+                    <p className="text-sm text-white mt-2" style={{ fontFamily: selectedFont }}>
                         ABCDEFGHIJKLMNOPQRSTUVWXYZ
                         abcdefghijklmnopqrstuvwxyz
                         0123456789
@@ -133,7 +134,7 @@ const FontFamilyMenu = (props: Props) => {
                 </div>
             )}
 
-            {/* Font Selector */}
+            {/* Font Dropdown */}
             <div className="relative mb-4">
                 <button
                     onClick={toggleMenu}
@@ -153,10 +154,8 @@ const FontFamilyMenu = (props: Props) => {
                     </svg>
                 </button>
 
-                {/* Dropdown Menu */}
                 {isOpen && (
                     <div className="absolute z-10 w-full mt-1 bg-gray-700 border border-gray-600 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                        {/* Search Box */}
                         <div className="p-2 border-b border-gray-600 sticky top-0 bg-gray-700">
                             <div className="relative">
                                 <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -178,7 +177,6 @@ const FontFamilyMenu = (props: Props) => {
                             </div>
                         </div>
 
-                        {/* Font List */}
                         <div className="overflow-y-auto max-h-64">
                             {loading ? (
                                 <div className="p-4 text-center text-gray-300">Loading fonts...</div>
@@ -209,11 +207,10 @@ const FontFamilyMenu = (props: Props) => {
                             )}
                         </div>
 
-                        {/* Pagination Controls */}
                         {totalPages > 1 && (
                             <div className="p-2 border-t border-gray-600 bg-gray-700 flex justify-between items-center">
                                 <button
-                                    onClick={() => setPage(p => Math.max(0, p - 1))}
+                                    onClick={() => setPage((p) => Math.max(0, p - 1))}
                                     disabled={page === 0}
                                     className={`px-3 py-1 rounded ${page === 0 ? 'text-gray-500' : 'text-white hover:bg-gray-600'}`}
                                 >
@@ -223,9 +220,10 @@ const FontFamilyMenu = (props: Props) => {
                                     Page {page + 1} of {totalPages}
                                 </span>
                                 <button
-                                    onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                                    onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                                     disabled={page >= totalPages - 1}
-                                    className={`px-3 py-1 rounded ${page >= totalPages - 1 ? 'text-gray-500' : 'text-white hover:bg-gray-600'}`}
+                                    className={`px-3 py-1 rounded ${page >= totalPages - 1 ? 'text-gray-500' : 'text-white hover:bg-gray-600'
+                                        }`}
                                 >
                                     Next
                                 </button>
@@ -235,7 +233,6 @@ const FontFamilyMenu = (props: Props) => {
                 )}
             </div>
 
-            {/* Font Stats */}
             <div className="text-sm text-gray-400">
                 {fonts.length > 0 ? (
                     <>Font collection: {fonts.length} fonts available</>
@@ -246,7 +243,6 @@ const FontFamilyMenu = (props: Props) => {
                 )}
             </div>
 
-            {/* Fetch Button */}
             {!fonts.length && !loading && (
                 <button
                     onClick={fetchFonts}

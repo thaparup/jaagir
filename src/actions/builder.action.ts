@@ -129,7 +129,7 @@ export const updateResume = async (
         message: "Could not find the resume",
       };
     }
-
+    console.log(data.phoneNumber);
     const updatedResume = await prisma.resume.update({
       where: { id: resumeId },
       data: {
