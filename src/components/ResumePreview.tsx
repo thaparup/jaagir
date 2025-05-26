@@ -1,59 +1,44 @@
 "use client";
-import {
-    Document,
-    Page,
-    StyleSheet,
-    Font,
-} from "@react-pdf/renderer";
-import dynamic from "next/dynamic";
-import React from "react";
-import { ResumeResponseSchemaType } from "@/schema/builder.schema";
-import BasicSectionPreview from "./ResumeLiveComponent/BasicSectionPreview";
-import useResumeGlobalStyle from "@/store/zustand/resumeGlobalStyleStore";
 
+import React, { useEffect, useMemo, useState } from "react";
+import { ResumeResponseSchemaType } from "@/schema/builder.schema";
+import BasicSectionPreview from "./ResumePreviewComponent/BasicSectionPreview";
+import SummarySectionPreview from "./ResumePreviewComponent/SummarySectionPreview";
+import useResumeStore from "@/store/zustand/resumeGlobalStyleStore";
+import html2canvas from "html2canvas-pro";
+
+import jsPDF from "jspdf";
+
+import Editor from "../components/Editor";
 type Props = {
     resume: ResumeResponseSchemaType;
 };
 
-
-const PDFViewer = dynamic(
-    () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
-    { ssr: false }
-);
-
-
-
 const ResumePreview = ({ resume }: Props) => {
     if (!resume.data) return null;
 
-    const { fontFamily } = useResumeGlobalStyle()
-
-    Font.register({ family: fontFamily.name, src: fontFamily.regular! })
-    const styles = StyleSheet.create({
-        page: {
-            flexDirection: 'row',
-            backgroundColor: "#E4E4E4",
-            margin: 4,
-            padding: 4,
-            fontFamily: fontFamily.name
-        },
-        section: {
-            fontFamily: fontFamily.name
-        }
-    });
-
+    const [data, setData] = useState("<p>Hello from CKEditor 5!</p>");
     return (
-        <div style={{ height: "100vh", background: '' }}>
-            <PDFViewer width="100%" height="100%">
-                <Document>
-                    <Page size="A4" style={styles.page}>
-                        <BasicSectionPreview resume={resume} />
 
-                    </Page>
-                </Document>
-            </PDFViewer>
+
+        <div
+            style={{
+                border: "1px solid red",
+                borderRadius: "8px",
+                padding: "10px",
+                backgroundColor: "white",
+                color: "black"
+            }}
+        >
+            <Editor />
         </div>
+
+
     );
 };
 
 export default ResumePreview;
+
+
+
+

@@ -127,3 +127,38 @@
 body {
   font-family: var(--font-lato), sans-serif;
 }
+
+.ql-toolbar {
+  border: 1px solid #e5e7eb;
+  background-color: oklch(87.2% 0.01 258.338);
+}
+.custom-quill-editor .ql-editor {
+  min-height: 20rem;
+}
+/* ckeditor-fix.css */
+.ck-editor__editable_inline {
+  min-height: 200px;
+  padding: 1rem;
+  background: white;
+  color: black;
+  border-radius: 4px;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+.tiptap {
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+}

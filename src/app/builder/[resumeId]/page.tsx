@@ -11,10 +11,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import isEqual from "fast-deep-equal";
-import BasicSection from "@/components/BuilderForm/BasicSection";
+import BassicSectionForm from "@/components/BuilderForm/BasicSectionForm";
 import { useFormStore } from "@/store/zustand/formStore";
 import ResumePreview from "@/components/ResumePreview";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
+import SummarySectionForm from "@/components/BuilderForm/SummarySectionForm";
+import watch from 'react-hook-form'
 const Page = () => {
     const params = useParams() as { resumeId: string };
     const resumeId = params.resumeId;
@@ -35,8 +37,7 @@ const Page = () => {
         defaultValues: {},
     });
 
-    const { getValues, reset } = methods;
-
+    const { getValues, reset, watch } = methods;
     const {
         data: fetchedResumeData,
         isLoading,
@@ -133,8 +134,8 @@ const Page = () => {
             )}
             <FormProvider {...methods}>
                 <form className="space-y-6 pb-10 w-[40%]" onChange={handleFormChange}>
-                    <BasicSection />
-
+                    <BassicSectionForm />
+                    <SummarySectionForm />
                 </form>
             </FormProvider>
 

@@ -3,7 +3,7 @@ import { createResume } from '@/actions/builder.action'
 import { BuilderSchema, BuilderSchemaType } from '@/schema/builder.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
-import BasicSection from './BuilderForm/BasicSection'
+import BasicSection from './BuilderForm/BasicSectionForm'
 import { Button } from './ui/button'
 import CustomFieldsForm from './CustomFieldsForm'
 
