@@ -17,7 +17,7 @@ import ResumePreview from "@/components/ResumePreview";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
 import SummarySectionForm from "@/components/BuilderForm/SummarySectionForm";
 import watch from 'react-hook-form'
-import ProfilesModal from "@/components/Modals/ProfilesModal";
+import ProfilesModal from "@/components/Modals/CreateProfileModal";
 import ProfileSectionForm from "@/components/BuilderForm/ProfileSectionForm";
 import OtherRemainingSections from "@/components/BuilderForm/OtherRemainingSections";
 const Page = () => {
@@ -57,7 +57,7 @@ const Page = () => {
             return await updateResume(updatedFormData, resumeId);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["-resumeById", resumeId] });
+            queryClient.invalidateQueries({ queryKey: ["resumeById", resumeId] });
             toast.success("Resume updated successfully");
             setOriginalData(getValues());
         },

@@ -34,7 +34,7 @@ export function SortableItem({
                 <DotsNine size={24} className="text-gray-400" />
             </div>
 
-            <div className="flex-1">{children}</div>
+            {children}
         </div>
     );
 }
