@@ -131,6 +131,7 @@ exports.Prisma.ResumeScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   location: 'location',
   basicCustomField: 'basicCustomField',
+  profiles: 'profiles',
   updatedAt: 'updatedAt'
 };
 

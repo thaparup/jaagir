@@ -12,12 +12,16 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import isEqual from "fast-deep-equal";
 import BassicSectionForm from "@/components/BuilderForm/BasicSectionForm";
-import { useFormStore } from "@/store/zustand/formStore";
+import { useFormStore } from "@/app/formStore";
 import ResumePreview from "@/components/ResumePreview";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
 import SummarySectionForm from "@/components/BuilderForm/SummarySectionForm";
 import watch from 'react-hook-form'
+import ProfilesModal from "@/components/Modals/ProfilesModal";
+import ProfileSectionForm from "@/components/BuilderForm/ProfileSectionForm";
+import OtherRemainingSections from "@/components/BuilderForm/OtherRemainingSections";
 const Page = () => {
+    const [openModalProfile, setOpenModalProfile] = useState(false)
     const params = useParams() as { resumeId: string };
     const resumeId = params.resumeId;
     const queryClient = useQueryClient();
@@ -53,7 +57,7 @@ const Page = () => {
             return await updateResume(updatedFormData, resumeId);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["resumeById", resumeId] });
+            queryClient.invalidateQueries({ queryKey: ["-resumeById", resumeId] });
             toast.success("Resume updated successfully");
             setOriginalData(getValues());
         },
@@ -101,7 +105,7 @@ const Page = () => {
 
 
 
-
+    console.log(fetchedResumeData)
     useEffect(() => {
         if (fetchedResumeData?.data) {
             setCurrentLiveResumeData(fetchedResumeData.data);
@@ -124,7 +128,7 @@ const Page = () => {
             </div>
         );
     }
-
+    console.log('resume from main', fetchedResumeData)
     return (
         <div className="bg-black text-white flex gap-8">
             {isSaving && (
@@ -132,20 +136,29 @@ const Page = () => {
                     Saving changes...
                 </div>
             )}
-            <FormProvider {...methods}>
-                <form className="space-y-6 pb-10 w-[40%]" onChange={handleFormChange}>
-                    <BassicSectionForm />
-                    <SummarySectionForm />
-                </form>
-            </FormProvider>
 
-            <div className="flex flex-col gap-8 w-full">
+            <div className="space-y-6 pb-10 w-[40%]">
+
+                {/* <FormProvider {...methods}>
+                    <form className="" onChange={handleFormChange}>
+                        <BassicSectionForm />
+                        <SummarySectionForm />
+                    </form>
+                </FormProvider> */}
+
+                <OtherRemainingSections resume={fetchedResumeData!} />
+            </div>
+
+
+
+
+            {/* <div className="flex flex-col gap-8 w-full">
                 <CVDrawer />
                 {currentLiveResumeData && (
                     <ResumePreview resume={{ data: currentLiveResumeData } as ResumeResponseSchemaType} />
                 )}
-            </div>
-        </div>
+            </div> */}
+        </div >
     );
 };
 

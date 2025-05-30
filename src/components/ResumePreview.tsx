@@ -9,7 +9,7 @@ import html2canvas from "html2canvas-pro";
 
 import jsPDF from "jspdf";
 
-import Editor from "../components/Editor";
+
 type Props = {
     resume: ResumeResponseSchemaType;
 };
@@ -17,7 +17,6 @@ type Props = {
 const ResumePreview = ({ resume }: Props) => {
     if (!resume.data) return null;
 
-    const [data, setData] = useState("<p>Hello from CKEditor 5!</p>");
     return (
 
 
@@ -30,7 +29,7 @@ const ResumePreview = ({ resume }: Props) => {
                 color: "black"
             }}
         >
-            <Editor />
+
         </div>
 
 

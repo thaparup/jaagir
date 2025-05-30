@@ -1,37 +1,13 @@
 "use server";
 
+import { JsonArray } from "@/generated/prisma/runtime/library";
 import prisma from "@/lib/prisma";
-import { ResumeSchemaType } from "@/schema/builder.schema";
+import {
+  ProfilesTypes,
+  ProfileType,
+  ResumeSchemaType,
+} from "@/schema/builder.schema";
 import * as LucideIcons from "lucide-react";
-// export const fetchResumeById = async (resumeId: string) => {
-//   try {
-//     const resume = await prisma.resume.findUnique({ where: { id: resumeId } });
-//     if (!resume) {
-//       return {
-//         success: false,
-//         message: "could not find the resume",
-//         data: null,
-//       };
-//     }
-
-//     return {
-//       success: true,
-//       message: "Fetched resume by id",
-//       data: {
-//         ...resume,
-//         basicCustomField: Array.isArray(resume.basicCustomField)
-//           ? resume.basicCustomField
-//           : [], // 👈 normalize to [] if null or invalid
-//       },
-//     };
-//   } catch (error) {
-//     return {
-//       success: false,
-//       message: "Something went wrong",
-//       data: null,
-//     };
-//   }
-// };
 
 export const fetchResumeById = async (
   resumeId: string
@@ -51,6 +27,7 @@ export const fetchResumeById = async (
       };
     }
     const validated = [];
+    const validatedProfiles = [];
     if (
       "basicCustomField" in resume &&
       Array.isArray(resume.basicCustomField)
@@ -75,11 +52,35 @@ export const fetchResumeById = async (
         }
       }
     }
-    console.log("passed validation", validated);
-    console.log(typeof validated);
-    // Normalize basicCustomField
+
+    if ("profiles" in resume && Array.isArray(resume.profiles)) {
+      if (resume.profiles.length < 0) resume.profiles = [];
+      else {
+        for (const item of resume.profiles) {
+          if (
+            typeof item === "object" &&
+            item !== null &&
+            "icon" in item &&
+            "username" in item &&
+            "network" in item &&
+            "url" in item &&
+            "id" in item
+          ) {
+            validatedProfiles.push({
+              icon: typeof item.icon === "string" ? item.icon : "",
+              username: typeof item.username === "string" ? item.username : "",
+              network: typeof item.network === "string" ? item.network : "",
+              url: typeof item.url === "string" ? item.url : "",
+              id: typeof item.id === "string" ? item.id : "",
+            });
+          }
+        }
+      }
+    }
+
     const normalized: ResumeSchemaType = {
       ...resume,
+      profiles: validatedProfiles,
       basicCustomField: validated,
     };
 
@@ -129,7 +130,7 @@ export const updateResume = async (
         message: "Could not find the resume",
       };
     }
-    console.log(data.phoneNumber);
+
     const updatedResume = await prisma.resume.update({
       where: { id: resumeId },
       data: {
@@ -140,7 +141,8 @@ export const updateResume = async (
         phoneNumber: data.phoneNumber,
         location: data.location,
         picture: data.picture,
-        basicCustomField: data.basicCustomField,
+        basicCustomField: data.basicCustomField!,
+        profiles: data.profiles!,
       },
     });
 
@@ -156,5 +158,145 @@ export const updateResume = async (
       message: "Something went wrong while updating the resume",
       error: error.message || error,
     };
+  }
+};
+
+export const reorderResumeProfiles = async (
+  resumeId: string,
+  profiles: ProfilesTypes
+) => {
+  try {
+    const resume = await prisma.resume.findUnique({ where: { id: resumeId } });
+
+    if (!resume) {
+      return {
+        success: false,
+        message: "Could not find the resume",
+      };
+    }
+
+    const updatedResume = await prisma.resume.update({
+      where: { id: resumeId },
+      data: {
+        profiles, // Only updating the 'profiles' field
+      },
+    });
+
+    return {
+      success: true,
+      message: "Profiles updated successfully",
+      data: updatedResume,
+    };
+  } catch (error: any) {
+    console.error("Error updating resume profiles:", error);
+    return {
+      success: false,
+      message: "Something went wrong while updating the profiles",
+      error: error.message || error,
+    };
+  }
+};
+
+// export const createProfile = async (resumeId: string, data: ProfileType) => {
+//   try {
+//     const existingResume = await prisma.resume.findUnique({
+//       where: { id: resumeId },
+//       select: { profiles: true },
+//     });
+
+//     if (!existingResume) {
+//       throw new Error("Resume not found");
+//     }
+//     const existingProfile = [];
+//     if (
+//       "profiles" in existingResume &&
+//       Array.isArray(existingResume.profiles)
+//     ) {
+//       if (existingResume.profiles.length < 0) return;
+//       else {
+//         for (const item of existingResume.profiles) {
+//           if (
+//             typeof item === "object" &&
+//             item !== null &&
+//             "icon" in item &&
+//             "username" in item &&
+//             "network" in item &&
+//             "url" in item
+//           ) {
+
+//           }
+//         }
+//       }
+//     }
+
+//     const updatedProfiles = [
+//       ...(existingResume.profiles || []),
+//       {
+//         network: data.network,
+//         username: data.username,
+//         url: data.url,
+//         icon: data.icon,
+//       },
+//     ];
+
+//     const updatedResume = await prisma.resume.update({
+//       where: { id: resumeId },
+//       data: {
+//         profiles: updatedProfiles,
+//       },
+//     });
+
+//     return {
+//       success: true,
+//       message: "Profile added successfully!",
+//       data: updatedResume,
+//     };
+//   } catch (error) {
+//     console.error("Error updating resume with profile:", error);
+//     throw new Error("Failed to add profile to resume");
+//   }
+// };
+
+export const createProfile = async (resumeId: string, data: ProfileType) => {
+  try {
+    const existingResume = await prisma.resume.findUnique({
+      where: { id: resumeId },
+      select: { profiles: true },
+    });
+
+    if (!existingResume) {
+      throw new Error("Resume not found");
+    }
+
+    const currentProfiles: JsonArray = Array.isArray(existingResume.profiles)
+      ? existingResume.profiles
+      : [];
+
+    const updatedProfiles: JsonArray = [
+      ...currentProfiles,
+      {
+        network: data.network,
+        username: data.username,
+        url: data.url,
+        icon: data.icon,
+        id: data.id,
+      },
+    ];
+
+    const updatedResume = await prisma.resume.update({
+      where: { id: resumeId },
+      data: {
+        profiles: updatedProfiles,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Profile added successfully!",
+      data: null,
+    };
+  } catch (error) {
+    console.error("Error updating resume with profile:", error);
+    throw new Error("Failed to add profile to resume");
   }
 };

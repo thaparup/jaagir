@@ -926,6 +926,7 @@ export namespace Prisma {
     phoneNumber: number
     location: number
     basicCustomField: number
+    profiles: number
     updatedAt: number
     _all: number
   }
@@ -976,6 +977,7 @@ export namespace Prisma {
     phoneNumber?: true
     location?: true
     basicCustomField?: true
+    profiles?: true
     updatedAt?: true
     _all?: true
   }
@@ -1077,6 +1079,7 @@ export namespace Prisma {
     phoneNumber: number | null
     location: string | null
     basicCustomField: JsonValue | null
+    profiles: JsonValue | null
     updatedAt: Date
     _count: ResumeCountAggregateOutputType | null
     _avg: ResumeAvgAggregateOutputType | null
@@ -1110,6 +1113,7 @@ export namespace Prisma {
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
+    profiles?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1124,6 +1128,7 @@ export namespace Prisma {
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
+    profiles?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1138,6 +1143,7 @@ export namespace Prisma {
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
+    profiles?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1152,10 +1158,11 @@ export namespace Prisma {
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
+    profiles?: boolean
     updatedAt?: boolean
   }
 
-  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "picture" | "fullName" | "headLine" | "email" | "website" | "phoneNumber" | "location" | "basicCustomField" | "updatedAt", ExtArgs["result"]["resume"]>
+  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "picture" | "fullName" | "headLine" | "email" | "website" | "phoneNumber" | "location" | "basicCustomField" | "profiles" | "updatedAt", ExtArgs["result"]["resume"]>
 
   export type $ResumePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Resume"
@@ -1171,6 +1178,7 @@ export namespace Prisma {
       phoneNumber: number | null
       location: string | null
       basicCustomField: Prisma.JsonValue | null
+      profiles: Prisma.JsonValue | null
       updatedAt: Date
     }, ExtArgs["result"]["resume"]>
     composites: {}
@@ -1605,6 +1613,7 @@ export namespace Prisma {
     readonly phoneNumber: FieldRef<"Resume", 'Int'>
     readonly location: FieldRef<"Resume", 'String'>
     readonly basicCustomField: FieldRef<"Resume", 'Json'>
+    readonly profiles: FieldRef<"Resume", 'Json'>
     readonly updatedAt: FieldRef<"Resume", 'DateTime'>
   }
     
@@ -1997,6 +2006,7 @@ export namespace Prisma {
     phoneNumber: 'phoneNumber',
     location: 'location',
     basicCustomField: 'basicCustomField',
+    profiles: 'profiles',
     updatedAt: 'updatedAt'
   };
 
@@ -2136,6 +2146,7 @@ export namespace Prisma {
     phoneNumber?: IntNullableFilter<"Resume"> | number | null
     location?: StringNullableFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableFilter<"Resume">
+    profiles?: JsonNullableFilter<"Resume">
     updatedAt?: DateTimeFilter<"Resume"> | Date | string
   }
 
@@ -2150,6 +2161,7 @@ export namespace Prisma {
     phoneNumber?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     basicCustomField?: SortOrderInput | SortOrder
+    profiles?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
   }
 
@@ -2167,6 +2179,7 @@ export namespace Prisma {
     phoneNumber?: IntNullableFilter<"Resume"> | number | null
     location?: StringNullableFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableFilter<"Resume">
+    profiles?: JsonNullableFilter<"Resume">
     updatedAt?: DateTimeFilter<"Resume"> | Date | string
   }, "id">
 
@@ -2181,6 +2194,7 @@ export namespace Prisma {
     phoneNumber?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     basicCustomField?: SortOrderInput | SortOrder
+    profiles?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: ResumeCountOrderByAggregateInput
     _avg?: ResumeAvgOrderByAggregateInput
@@ -2203,6 +2217,7 @@ export namespace Prisma {
     phoneNumber?: IntNullableWithAggregatesFilter<"Resume"> | number | null
     location?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableWithAggregatesFilter<"Resume">
+    profiles?: JsonNullableWithAggregatesFilter<"Resume">
     updatedAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
   }
 
@@ -2217,6 +2232,7 @@ export namespace Prisma {
     phoneNumber?: number | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2231,6 +2247,7 @@ export namespace Prisma {
     phoneNumber?: number | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2245,6 +2262,7 @@ export namespace Prisma {
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2259,6 +2277,7 @@ export namespace Prisma {
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2273,6 +2292,7 @@ export namespace Prisma {
     phoneNumber?: number | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2287,6 +2307,7 @@ export namespace Prisma {
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2301,6 +2322,7 @@ export namespace Prisma {
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
+    profiles?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2395,6 +2417,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder
     location?: SortOrder
     basicCustomField?: SortOrder
+    profiles?: SortOrder
     updatedAt?: SortOrder
   }
 

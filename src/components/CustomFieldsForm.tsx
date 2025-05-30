@@ -21,7 +21,7 @@ import {
     verticalListSortingStrategy,
     useSortable
 } from "@dnd-kit/sortable";
-import { useFormStore } from "@/store/zustand/formStore";
+import { useFormStore } from "@/app/formStore";
 
 type CustomField = {
     icon: string;
