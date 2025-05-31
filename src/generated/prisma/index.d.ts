@@ -897,6 +897,7 @@ export namespace Prisma {
     headLine: string | null
     email: string | null
     website: string | null
+    summary: string | null
     phoneNumber: number | null
     location: string | null
     updatedAt: Date | null
@@ -910,6 +911,7 @@ export namespace Prisma {
     headLine: string | null
     email: string | null
     website: string | null
+    summary: string | null
     phoneNumber: number | null
     location: string | null
     updatedAt: Date | null
@@ -923,10 +925,13 @@ export namespace Prisma {
     headLine: number
     email: number
     website: number
+    summary: number
     phoneNumber: number
     location: number
     basicCustomField: number
     profiles: number
+    experiences: number
+    skills: number
     updatedAt: number
     _all: number
   }
@@ -948,6 +953,7 @@ export namespace Prisma {
     headLine?: true
     email?: true
     website?: true
+    summary?: true
     phoneNumber?: true
     location?: true
     updatedAt?: true
@@ -961,6 +967,7 @@ export namespace Prisma {
     headLine?: true
     email?: true
     website?: true
+    summary?: true
     phoneNumber?: true
     location?: true
     updatedAt?: true
@@ -974,10 +981,13 @@ export namespace Prisma {
     headLine?: true
     email?: true
     website?: true
+    summary?: true
     phoneNumber?: true
     location?: true
     basicCustomField?: true
     profiles?: true
+    experiences?: true
+    skills?: true
     updatedAt?: true
     _all?: true
   }
@@ -1076,10 +1086,13 @@ export namespace Prisma {
     headLine: string | null
     email: string | null
     website: string | null
+    summary: string | null
     phoneNumber: number | null
     location: string | null
     basicCustomField: JsonValue | null
     profiles: JsonValue | null
+    experiences: JsonValue | null
+    skills: JsonValue | null
     updatedAt: Date
     _count: ResumeCountAggregateOutputType | null
     _avg: ResumeAvgAggregateOutputType | null
@@ -1110,10 +1123,13 @@ export namespace Prisma {
     headLine?: boolean
     email?: boolean
     website?: boolean
+    summary?: boolean
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
     profiles?: boolean
+    experiences?: boolean
+    skills?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1125,10 +1141,13 @@ export namespace Prisma {
     headLine?: boolean
     email?: boolean
     website?: boolean
+    summary?: boolean
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
     profiles?: boolean
+    experiences?: boolean
+    skills?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1140,10 +1159,13 @@ export namespace Prisma {
     headLine?: boolean
     email?: boolean
     website?: boolean
+    summary?: boolean
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
     profiles?: boolean
+    experiences?: boolean
+    skills?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1155,14 +1177,17 @@ export namespace Prisma {
     headLine?: boolean
     email?: boolean
     website?: boolean
+    summary?: boolean
     phoneNumber?: boolean
     location?: boolean
     basicCustomField?: boolean
     profiles?: boolean
+    experiences?: boolean
+    skills?: boolean
     updatedAt?: boolean
   }
 
-  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "picture" | "fullName" | "headLine" | "email" | "website" | "phoneNumber" | "location" | "basicCustomField" | "profiles" | "updatedAt", ExtArgs["result"]["resume"]>
+  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "picture" | "fullName" | "headLine" | "email" | "website" | "summary" | "phoneNumber" | "location" | "basicCustomField" | "profiles" | "experiences" | "skills" | "updatedAt", ExtArgs["result"]["resume"]>
 
   export type $ResumePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Resume"
@@ -1175,10 +1200,13 @@ export namespace Prisma {
       headLine: string | null
       email: string | null
       website: string | null
+      summary: string | null
       phoneNumber: number | null
       location: string | null
       basicCustomField: Prisma.JsonValue | null
       profiles: Prisma.JsonValue | null
+      experiences: Prisma.JsonValue | null
+      skills: Prisma.JsonValue | null
       updatedAt: Date
     }, ExtArgs["result"]["resume"]>
     composites: {}
@@ -1610,10 +1638,13 @@ export namespace Prisma {
     readonly headLine: FieldRef<"Resume", 'String'>
     readonly email: FieldRef<"Resume", 'String'>
     readonly website: FieldRef<"Resume", 'String'>
+    readonly summary: FieldRef<"Resume", 'String'>
     readonly phoneNumber: FieldRef<"Resume", 'Int'>
     readonly location: FieldRef<"Resume", 'String'>
     readonly basicCustomField: FieldRef<"Resume", 'Json'>
     readonly profiles: FieldRef<"Resume", 'Json'>
+    readonly experiences: FieldRef<"Resume", 'Json'>
+    readonly skills: FieldRef<"Resume", 'Json'>
     readonly updatedAt: FieldRef<"Resume", 'DateTime'>
   }
     
@@ -2003,10 +2034,13 @@ export namespace Prisma {
     headLine: 'headLine',
     email: 'email',
     website: 'website',
+    summary: 'summary',
     phoneNumber: 'phoneNumber',
     location: 'location',
     basicCustomField: 'basicCustomField',
     profiles: 'profiles',
+    experiences: 'experiences',
+    skills: 'skills',
     updatedAt: 'updatedAt'
   };
 
@@ -2143,10 +2177,13 @@ export namespace Prisma {
     headLine?: StringNullableFilter<"Resume"> | string | null
     email?: StringNullableFilter<"Resume"> | string | null
     website?: StringNullableFilter<"Resume"> | string | null
+    summary?: StringNullableFilter<"Resume"> | string | null
     phoneNumber?: IntNullableFilter<"Resume"> | number | null
     location?: StringNullableFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableFilter<"Resume">
     profiles?: JsonNullableFilter<"Resume">
+    experiences?: JsonNullableFilter<"Resume">
+    skills?: JsonNullableFilter<"Resume">
     updatedAt?: DateTimeFilter<"Resume"> | Date | string
   }
 
@@ -2158,10 +2195,13 @@ export namespace Prisma {
     headLine?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
     phoneNumber?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     basicCustomField?: SortOrderInput | SortOrder
     profiles?: SortOrderInput | SortOrder
+    experiences?: SortOrderInput | SortOrder
+    skills?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
   }
 
@@ -2176,10 +2216,13 @@ export namespace Prisma {
     headLine?: StringNullableFilter<"Resume"> | string | null
     email?: StringNullableFilter<"Resume"> | string | null
     website?: StringNullableFilter<"Resume"> | string | null
+    summary?: StringNullableFilter<"Resume"> | string | null
     phoneNumber?: IntNullableFilter<"Resume"> | number | null
     location?: StringNullableFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableFilter<"Resume">
     profiles?: JsonNullableFilter<"Resume">
+    experiences?: JsonNullableFilter<"Resume">
+    skills?: JsonNullableFilter<"Resume">
     updatedAt?: DateTimeFilter<"Resume"> | Date | string
   }, "id">
 
@@ -2191,10 +2234,13 @@ export namespace Prisma {
     headLine?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
     phoneNumber?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     basicCustomField?: SortOrderInput | SortOrder
     profiles?: SortOrderInput | SortOrder
+    experiences?: SortOrderInput | SortOrder
+    skills?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: ResumeCountOrderByAggregateInput
     _avg?: ResumeAvgOrderByAggregateInput
@@ -2214,10 +2260,13 @@ export namespace Prisma {
     headLine?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     email?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     website?: StringNullableWithAggregatesFilter<"Resume"> | string | null
+    summary?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     phoneNumber?: IntNullableWithAggregatesFilter<"Resume"> | number | null
     location?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableWithAggregatesFilter<"Resume">
     profiles?: JsonNullableWithAggregatesFilter<"Resume">
+    experiences?: JsonNullableWithAggregatesFilter<"Resume">
+    skills?: JsonNullableWithAggregatesFilter<"Resume">
     updatedAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
   }
 
@@ -2229,10 +2278,13 @@ export namespace Prisma {
     headLine?: string | null
     email?: string | null
     website?: string | null
+    summary?: string | null
     phoneNumber?: number | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2244,10 +2296,13 @@ export namespace Prisma {
     headLine?: string | null
     email?: string | null
     website?: string | null
+    summary?: string | null
     phoneNumber?: number | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2259,10 +2314,13 @@ export namespace Prisma {
     headLine?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2274,10 +2332,13 @@ export namespace Prisma {
     headLine?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2289,10 +2350,13 @@ export namespace Prisma {
     headLine?: string | null
     email?: string | null
     website?: string | null
+    summary?: string | null
     phoneNumber?: number | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2304,10 +2368,13 @@ export namespace Prisma {
     headLine?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2319,10 +2386,13 @@ export namespace Prisma {
     headLine?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
+    experiences?: NullableJsonNullValueInput | InputJsonValue
+    skills?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2414,10 +2484,13 @@ export namespace Prisma {
     headLine?: SortOrder
     email?: SortOrder
     website?: SortOrder
+    summary?: SortOrder
     phoneNumber?: SortOrder
     location?: SortOrder
     basicCustomField?: SortOrder
     profiles?: SortOrder
+    experiences?: SortOrder
+    skills?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -2433,6 +2506,7 @@ export namespace Prisma {
     headLine?: SortOrder
     email?: SortOrder
     website?: SortOrder
+    summary?: SortOrder
     phoneNumber?: SortOrder
     location?: SortOrder
     updatedAt?: SortOrder
@@ -2446,6 +2520,7 @@ export namespace Prisma {
     headLine?: SortOrder
     email?: SortOrder
     website?: SortOrder
+    summary?: SortOrder
     phoneNumber?: SortOrder
     location?: SortOrder
     updatedAt?: SortOrder

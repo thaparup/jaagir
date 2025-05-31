@@ -89,8 +89,6 @@ const CreateProfileModal = ({ openModal, setOpenModal, resumeId }: Props) => {
     const {
         register,
         handleSubmit,
-        watch,
-        control,
         setValue,
         reset,
         formState: { errors },
@@ -162,99 +160,99 @@ const CreateProfileModal = ({ openModal, setOpenModal, resumeId }: Props) => {
                         </div>
                     </DialogTitle>
                     <DialogDescription className="text-gray-300">
-                        <form
-                            className="flex flex-col gap-6"
-                            onSubmit={handleSubmit(onSubmit)}
-                        >
-                            {/* Platform Selector */}
-                            <div className="flex flex-col gap-2 mt-4">
-                                <label className="font-semibold">Platform</label>
-                                <div className="grid grid-cols-4 gap-2">
-                                    {Platforms.map((platform) => {
-                                        const IconComponent =
-                                            iconMap[platform.icon as keyof typeof iconMap];
-
-                                        return (
-                                            <button
-                                                key={platform.name}
-                                                type="button"
-                                                onClick={() => handlePlatformSelect(platform)}
-                                                className={`p-3 rounded-lg border-2 transition-all duration-200 flex flex-col items-center gap-1 ${selectedPlatform.name === platform.name
-                                                    ? "border-primary bg-primary/10 text-primary"
-                                                    : "border-gray-600 hover:border-gray-500 text-gray-400 hover:text-gray-300"
-                                                    }`}
-                                            >
-                                                <IconComponent size={20} />
-                                                <span className="text-xs font-medium">
-                                                    {platform.name}
-                                                </span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-
-                            {/* Selected Platform Display */}
-                            <div className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
-                                {SelectedIcon && (
-                                    <SelectedIcon className="text-primary" size={24} />
-                                )}
-                                <div>
-                                    <p className="font-semibold text-white">
-                                        {selectedPlatform.name}
-                                    </p>
-                                    <p className="text-sm text-gray-400">Selected platform</p>
-                                </div>
-                            </div>
-
-                            {/* Username Field */}
-                            <div className="flex flex-col gap-2">
-                                <label className="font-semibold">Username/Handle</label>
-                                <input
-                                    {...register("username")}
-                                    className="bg-gray-800 border border-gray-600 outline-none focus:border-primary rounded-lg placeholder:text-gray-500 p-3 w-full text-white"
-                                    placeholder={
-                                        selectedPlatform.name === "Gmail"
-                                            ? "your.email"
-                                            : "username"
-                                    }
-                                />
-                                {typeof errors.username?.message === "string" && (
-                                    <p className="text-red-500 text-sm">
-                                        {errors.username.message}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* URL Field */}
-                            <div className="flex flex-col gap-2">
-                                <label className="font-semibold">URL/Link</label>
-                                <input
-                                    {...register("url")}
-                                    type="url"
-                                    className="bg-gray-800 border border-gray-600 outline-none focus:border-primary rounded-lg placeholder:text-gray-500 p-3 w-full text-white"
-                                    placeholder={selectedPlatform.placeholder}
-                                />
-                                {typeof errors.url?.message === "string" && (
-                                    <p className="text-red-500 text-sm">{errors.url.message}</p>
-                                )}
-                            </div>
-
-                            {/* General form error for the refine validation */}
-                            {errors.root && (
-                                <p className="text-red-500 text-sm">{errors.root.message}</p>
-                            )}
-
-                            <Button
-                                type="submit"
-                                className="mt-2 bg-primary hover:bg-primary/90 text-white cursor-pointer"
-                            >
-                                Add Profile
-                            </Button>
-                        </form>
+                        Fill out the form below to add a social profile.
                     </DialogDescription>
                 </DialogHeader>
+
+                <form className="flex flex-col gap-6 mt-4" onSubmit={handleSubmit(onSubmit)}>
+                    {/* Platform Selector */}
+                    <div className="flex flex-col gap-2">
+                        <label className="font-semibold">Platform</label>
+                        <div className="grid grid-cols-4 gap-2">
+                            {Platforms.map((platform) => {
+                                const IconComponent =
+                                    iconMap[platform.icon as keyof typeof iconMap];
+
+                                return (
+                                    <button
+                                        key={platform.name}
+                                        type="button"
+                                        onClick={() => handlePlatformSelect(platform)}
+                                        className={`p-3 rounded-lg border-2 transition-all duration-200 flex flex-col items-center gap-1 ${selectedPlatform.name === platform.name
+                                            ? "border-primary bg-primary/10 text-primary"
+                                            : "border-gray-600 hover:border-gray-500 text-gray-400 hover:text-gray-300"
+                                            }`}
+                                    >
+                                        <IconComponent size={20} />
+                                        <span className="text-xs font-medium">
+                                            {platform.name}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Selected Platform Display */}
+                    <div className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
+                        {SelectedIcon && (
+                            <SelectedIcon className="text-primary" size={24} />
+                        )}
+                        <div>
+                            <p className="font-semibold text-white">
+                                {selectedPlatform.name}
+                            </p>
+                            <p className="text-sm text-gray-400">Selected platform</p>
+                        </div>
+                    </div>
+
+                    {/* Username Field */}
+                    <div className="flex flex-col gap-2">
+                        <label className="font-semibold">Username/Handle</label>
+                        <input
+                            {...register("username")}
+                            className="bg-gray-800 border border-gray-600 outline-none focus:border-primary rounded-lg placeholder:text-gray-500 p-3 w-full text-white"
+                            placeholder={
+                                selectedPlatform.name === "Gmail"
+                                    ? "your.email"
+                                    : "username"
+                            }
+                        />
+                        {typeof errors.username?.message === "string" && (
+                            <p className="text-red-500 text-sm">
+                                {errors.username.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* URL Field */}
+                    <div className="flex flex-col gap-2">
+                        <label className="font-semibold">URL/Link</label>
+                        <input
+                            {...register("url")}
+                            type="url"
+                            className="bg-gray-800 border border-gray-600 outline-none focus:border-primary rounded-lg placeholder:text-gray-500 p-3 w-full text-white"
+                            placeholder={selectedPlatform.placeholder}
+                        />
+                        {typeof errors.url?.message === "string" && (
+                            <p className="text-red-500 text-sm">{errors.url.message}</p>
+                        )}
+                    </div>
+
+                    {/* General form error */}
+                    {errors.root && (
+                        <p className="text-red-500 text-sm">{errors.root.message}</p>
+                    )}
+
+                    <Button
+                        type="submit"
+                        className="mt-2 bg-primary hover:bg-primary/90 text-white cursor-pointer"
+                    >
+                        Add Profile
+                    </Button>
+                </form>
             </DialogContent>
+
         </Dialog>
     );
 };

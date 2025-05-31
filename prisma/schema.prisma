@@ -22,9 +22,12 @@ model Resume {
   headLine         String?
   email            String?
   website          String?
+  summary          String?
   phoneNumber      Int?
   location         String?
   basicCustomField Json?
   profiles         Json?
+  experiences      Json?
+  skills           Json?
   updatedAt        DateTime @updatedAt
 }

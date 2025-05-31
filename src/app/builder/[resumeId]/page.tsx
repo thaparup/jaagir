@@ -105,7 +105,6 @@ const Page = () => {
 
 
 
-    console.log(fetchedResumeData)
     useEffect(() => {
         if (fetchedResumeData?.data) {
             setCurrentLiveResumeData(fetchedResumeData.data);
@@ -128,7 +127,6 @@ const Page = () => {
             </div>
         );
     }
-    console.log('resume from main', fetchedResumeData)
     return (
         <div className="bg-black text-white flex gap-8">
             {isSaving && (

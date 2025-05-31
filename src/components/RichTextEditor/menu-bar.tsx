@@ -120,7 +120,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
     return (
 
         <TooltipProvider>
-            <div className="border rounded-md p-1 mb-1 bg-slate-50 text-gray-800 space-x-2 z-50">
+            <div className="border rounded-md p-1 mb-1 bg-gray-800 text-gray-200 space-x-2 z-50">
                 {Options.map((option, index) => (
                     <Tooltip key={index}>
                         <TooltipTrigger asChild>
