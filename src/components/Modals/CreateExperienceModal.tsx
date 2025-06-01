@@ -80,8 +80,7 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
 
         const finalData = { ...data, id: uuidv4() };
         createExperienceMutate(finalData)
-        // log to confirm it’s actually added
-        console.log("Submitted data:", finalData);
+
     };
 
     return (

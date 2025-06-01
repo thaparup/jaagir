@@ -55,6 +55,24 @@ export type ExperienceSchemaType = z.infer<typeof ExperienceSchema>;
 }
 
 {
+  /*  **************************** Skills ********************************************************************************** */
+}
+
+export const SkillSchema = z.object({
+  id: z.string(),
+  name: z.string().nonempty("at least one character is required"),
+  description: z.string().optional(),
+  // level: z.number().nullable(),
+  // level: z.array(z.number()).length(1).nullable()
+  level: z.array(z.number()).nullable(),
+});
+export type SkillSchemaType = z.infer<typeof SkillSchema>;
+
+{
+  /*  **************************** Skills ********************************************************************************** */
+}
+
+{
   /* ********************************************* Resume ************************************************************************* */
 }
 
@@ -83,6 +101,7 @@ export const ResumeSchema = z.object({
   basicCustomField: z.array(BasicCustomFieldType).nullable(),
   profiles: z.array(ProfileSchema).nullable(),
   experiences: z.array(ExperienceSchema).nullable(),
+  skills: z.array(SkillSchema).nullable(),
 });
 
 export const ResumeResponseSchema = z.object({

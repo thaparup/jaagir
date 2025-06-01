@@ -2,6 +2,7 @@ import React from 'react'
 import ProfileSectionForm from './ProfileSectionForm'
 import { ResumeResponseSchemaType } from '@/schema/builder.schema'
 import ExperienceSectionForm from './ExperienceSectionForm'
+import SkillsSectionForm from './SkillsSectionForm'
 
 type Props = {
     resume: ResumeResponseSchemaType
@@ -14,7 +15,8 @@ const OtherRemainingSections = ({ resume }: Props) => {
         <div>
             asdsadsad
             {/* <ProfileSectionForm resume={resume} /> */}
-            <ExperienceSectionForm resume={resume?.data!} />
+            {/* <ExperienceSectionForm resume={resume?.data!} /> */}
+            <SkillsSectionForm resume={resume?.data!} />
         </div>
     )
 }

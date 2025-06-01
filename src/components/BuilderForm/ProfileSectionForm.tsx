@@ -119,7 +119,7 @@ const ProfileSectionForm = ({ resume }: Props) => {
                                 <div className="mr-4 cursor-pointer ">
                                     <Menu
                                         key={activeProfileId}
-                                        profileId={profile.id}
+                                        id={profile.id}
                                         triggerLabel={<List size={20} />}
                                         items={[
                                             { label: "Edit", icon: <Pencil />, iconClassName: '', onClick: handleEdit },

@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import {
     ExperienceSchemaType,
     ResumeSchemaType,
+    SkillSchemaType,
 } from "@/schema/builder.schema";
 import CreateExperienceModal from "../Modals/CreateExperienceModal";
 import DndProvider from "../DndProvider";
@@ -18,46 +19,49 @@ import {
 } from "@/actions/Builder/experience.action";
 import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
-import { List, Pencil, Trash } from "lucide-react";
+import { DraftingCompass, List, Pencil, Trash } from "lucide-react";
 import EditExperienceModal from "../Modals/EditExperienceModal";
 import Alert from "../Alert";
+import CreateSkillModal from "../Modals/CreateSkillModal";
+import { deleteSkill, reorderResumeSkills } from "@/actions/Builder/skill.action";
+import EditSkillModal from "../Modals/EditSkillModal";
 
 type Props = {
     resume: ResumeSchemaType;
 };
 
-const ExperienceSectionForm = ({ resume }: Props) => {
+const SkillsSectionForm = ({ resume }: Props) => {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [experiences, setexperiences] = useState<ExperienceSchemaType[] | []>(
+    const [skills, setSkills] = useState<SkillSchemaType[] | []>(
         []
     );
-    const [activeExpId, setActiveExpId] = useState("");
+    const [activeSkillId, setActiveSkillId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const mutationTimer = useRef<NodeJS.Timeout | null>(null);
     const queryClient = useQueryClient();
 
     useEffect(() => {
-        if (resume.experiences) {
-            setexperiences(resume.experiences);
+        if (resume.skills) {
+            setSkills(resume.skills);
         }
     }, [resume]);
 
     const deleteMutation = useMutation({
-        mutationFn: async (experiences: ExperienceSchemaType[]) => {
-            return await deleteExperience(resume?.id!, experiences);
+        mutationFn: async (skills: SkillSchemaType[]) => {
+            return await deleteSkill(resume?.id!, skills);
         },
         onSuccess: () => {
-            setActiveExpId("");
+            setActiveSkillId("");
             setShowAlert(false);
-            toast.success("Experience deleted successfully");
+            toast.success("Skill deleted successfully");
             queryClient.invalidateQueries({ queryKey: ["resumeById", resume?.id] });
         },
         onError: (error) => {
-            setActiveExpId("");
+            setActiveSkillId("");
             setShowAlert(false);
             toast.error(
-                `Error deleting expenditure: ${error instanceof Error ? error.message : "Unknown error"
+                `Error deleting skill: ${error instanceof Error ? error.message : "Unknown error"
                 }`
             );
         },
@@ -67,7 +71,7 @@ const ExperienceSectionForm = ({ resume }: Props) => {
         const { active, over } = event;
 
         if (active.id !== over?.id) {
-            setexperiences((prevItems) => {
+            setSkills((prevItems) => {
                 const oldIndex = prevItems.findIndex((item) => item.id === active.id);
                 const newIndex = prevItems.findIndex((item) => item.id === over?.id);
 
@@ -78,11 +82,11 @@ const ExperienceSectionForm = ({ resume }: Props) => {
                 }
 
                 mutationTimer.current = setTimeout(() => {
-                    reorderResumeExperiences(resume?.id!, newItems);
+                    reorderResumeSkills(resume?.id!, newItems);
                     queryClient.invalidateQueries({
                         queryKey: ["resumeById", resume?.id],
                     });
-                    toast.success("reordered");
+                    toast.success("reordered skills");
                 }, 4000);
 
                 return newItems;
@@ -91,47 +95,47 @@ const ExperienceSectionForm = ({ resume }: Props) => {
     }
 
     const handleEdit = (expId?: string) => {
-        console.log(`Edit clicked for exp ID: ${expId}`);
-        setActiveExpId(expId!);
+        setActiveSkillId(expId!);
         setShowEditModal(true);
     };
 
     const handleDelete = (expId?: string) => {
         if (expId) {
             setShowAlert(true);
-            setActiveExpId(expId);
+            setActiveSkillId(expId);
         }
     };
 
     const confirmDelete = () => {
-        const filteredExps = experiences.filter((exp) => exp.id !== activeExpId);
-        deleteMutation.mutate(filteredExps);
+        const filteredSkills = skills.filter((exp) => exp.id !== activeSkillId);
+        deleteMutation.mutate(filteredSkills);
     };
     return (
         <div className="px-8">
             <div className="flex gap-6 items-center mb-6">
-                <Notebook />
-                <h3 className="text-2xl font-medium text-white">Experience</h3>
+                <DraftingCompass />
+                <h3 className="text-2xl font-medium text-white">Skills</h3>
             </div>
 
-            <DndProvider onDragEnd={handleDragEnd} items={experiences}>
+
+            <DndProvider onDragEnd={handleDragEnd} items={skills}>
                 <div className="flex flex-col gap-4 p-8 border-4 border-red-700">
-                    {experiences.map((exp) => (
-                        <SortableItem key={exp.id} uuid={exp.id}>
+                    {skills.map((skill) => (
+                        <SortableItem key={skill.id} uuid={skill.id}>
                             <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
                                 <div className="flex flex-col gap-1 px-6 py-3 w-full">
                                     <span className="font-semibold text-sm text-white">
-                                        {exp.company!}
+                                        {skill.name}
                                     </span>
                                     <span className="font-medium text-sm text-gray-400">
-                                        {exp.position || exp.location || exp.website}
+                                        {skill.description || skill.level || ''}
                                     </span>
                                 </div>
 
                                 <div className="mr-4 cursor-pointer ">
                                     <Menu
-                                        key={activeExpId}
-                                        id={exp.id}
+
+                                        id={skill.id}
                                         triggerLabel={<List size={20} />}
                                         items={[
                                             {
@@ -157,32 +161,35 @@ const ExperienceSectionForm = ({ resume }: Props) => {
                 </div>
             </DndProvider>
 
+
             <Button
                 type="button"
                 onClick={() => setShowCreateModal(true)}
                 className="mt-6 "
             >
-                Add New Experience
+                Add New Skills
             </Button>
 
-            <CreateExperienceModal
+            <CreateSkillModal
                 openModal={showCreateModal}
                 setOpenModal={setShowCreateModal}
                 resumeId={resume.id!}
             />
 
-            <EditExperienceModal
-                activeExpId={activeExpId}
-                experiences={resume.experiences!}
+
+            <EditSkillModal
+                activeSkillId={activeSkillId}
+                skills={resume.skills!}
                 openModal={showEditModal}
                 setOpenModal={setShowEditModal}
                 resumeId={resume.id}
             />
+
             <Alert
                 open={showAlert}
                 onOpenChange={setShowAlert}
                 title="Are you absolutely sure?"
-                description="This action cannot be undone. This will permanently delete your experience and remove your data from our servers."
+                description="This action cannot be undone. This will permanently delete your skill from the resume and remove your data from our servers."
                 cancelText="Cancel"
                 actionText="Delete"
                 onConfirm={confirmDelete}
@@ -191,4 +198,4 @@ const ExperienceSectionForm = ({ resume }: Props) => {
     );
 };
 
-export default ExperienceSectionForm;
+export default SkillsSectionForm;
