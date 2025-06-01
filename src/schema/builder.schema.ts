@@ -109,6 +109,24 @@ export type LanguageSchemaType = z.infer<typeof LanguageSchema>;
 }
 
 {
+  /*  **************************** Projects ********************************************************************************** */
+}
+
+export const ProjectSchema = z.object({
+  id: z.string(),
+  name: z.string().nonempty("at least one character is required"),
+  description: z.string(),
+  date: z.string(),
+  website: z.string(),
+  summary: z.string(),
+});
+
+export type ProjectSchemaType = z.infer<typeof ProjectSchema>;
+{
+  /*  **************************** Projects ********************************************************************************** */
+}
+
+{
   /* ********************************************* Resume ************************************************************************* */
 }
 
@@ -140,6 +158,7 @@ export const ResumeSchema = z.object({
   skills: z.array(SkillSchema).nullable(),
   education: z.array(EducationSchema).nullable(),
   languages: z.array(LanguageSchema).nullable(),
+  projects: z.array(ProjectSchema).nullable(),
 });
 
 export const ResumeResponseSchema = z.object({
