@@ -135,6 +135,9 @@ exports.Prisma.ResumeScalarFieldEnum = {
   profiles: 'profiles',
   experiences: 'experiences',
   skills: 'skills',
+  education: 'education',
+  projects: 'projects',
+  languages: 'languages',
   updatedAt: 'updatedAt'
 };
 

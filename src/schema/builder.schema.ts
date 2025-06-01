@@ -73,6 +73,26 @@ export type SkillSchemaType = z.infer<typeof SkillSchema>;
 }
 
 {
+  /*  **************************** Education ********************************************************************************** */
+}
+
+export const EducationSchema = z.object({
+  id: z.string(),
+  institution: z.string().nonempty('"at least one character is required'),
+  typesOfStudy: z.string().optional(),
+  areaOfStudy: z.string().optional(),
+  score: z.string().optional(),
+  date: z.string().optional(),
+  website: z.string().optional(),
+  summary: z.string().optional(),
+});
+
+export type EducationSchemaType = z.infer<typeof EducationSchema>;
+{
+  /*  **************************** Education ********************************************************************************** */
+}
+
+{
   /* ********************************************* Resume ************************************************************************* */
 }
 
@@ -102,6 +122,7 @@ export const ResumeSchema = z.object({
   profiles: z.array(ProfileSchema).nullable(),
   experiences: z.array(ExperienceSchema).nullable(),
   skills: z.array(SkillSchema).nullable(),
+  education: z.array(EducationSchema).nullable(),
 });
 
 export const ResumeResponseSchema = z.object({

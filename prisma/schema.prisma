@@ -29,5 +29,8 @@ model Resume {
   profiles         Json?
   experiences      Json?
   skills           Json?
+  education        Json?
+  projects         Json?
+  languages        Json?
   updatedAt        DateTime @updatedAt
 }
