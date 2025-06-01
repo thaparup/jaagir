@@ -23,7 +23,7 @@ import { ProfileType } from "@/schema/builder.schema";
 type Props = {
     children: React.ReactNode;
     onDragEnd: (event: DragEndEvent) => void;
-    items: ProfileType[];
+    items: any;
 };
 
 const DndProvider = ({ children, onDragEnd, items }: Props) => {

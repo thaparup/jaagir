@@ -40,6 +40,7 @@ export type ProfileType = z.infer<typeof ProfileSchema>;
 }
 
 export const ExperienceSchema = z.object({
+  id: z.string(),
   company: z.string().nonempty("at least one 1 character is requierd"),
   position: z.string().optional(),
   date: z.string().optional(),

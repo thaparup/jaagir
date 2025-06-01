@@ -95,6 +95,7 @@ const ProfileSectionForm = ({ resume }: Props) => {
         }
     };
 
+
     return (
         <div className="px-8">
             <div className="flex gap-6 items-center mb-6">

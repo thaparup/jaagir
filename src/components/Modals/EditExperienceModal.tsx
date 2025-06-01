@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -19,17 +19,25 @@ import { toast } from "sonner";
 import { Plus } from "phosphor-react";
 import { Button } from "../ui/button";
 import RichTextEditor from "../RichTextEditor";
-import { createExperience } from "@/actions/Builder/experience.action";
-import { v4 as uuidv4 } from "uuid";
-
+import { updateExperience } from "@/actions/Builder/experience.action";
 
 type Props = {
     openModal: boolean;
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
     resumeId: string;
+    experiences: ExperienceSchemaType[];
+    activeExpId: string;
 };
 
-const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => {
+const EditExperienceModal = ({
+    openModal,
+    setOpenModal,
+    resumeId,
+    experiences,
+    activeExpId,
+}: Props) => {
+    const [activeExpIndex, setActiveExpIndex] = useState<number | null>(null);
+
     const queryClient = useQueryClient();
 
     const {
@@ -37,6 +45,7 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
         handleSubmit,
         reset,
         control,
+        setValue,
         formState: { errors },
     } = useForm<ExperienceSchemaType>({
         resolver: zodResolver(ExperienceSchema),
@@ -51,16 +60,32 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
         },
     });
 
-    const {
-        mutate: createExperienceMutate,
-        isPending,
-    } = useMutation({
-        mutationFn: async (data: ExperienceSchemaType) => {
-            return await createExperience(resumeId, data);
+    useEffect(() => {
+        if (experiences && activeExpId) {
+            const matchedIndex = experiences.findIndex(
+                (exp) => exp.id === activeExpId
+            );
+            if (matchedIndex !== -1) {
+                setActiveExpIndex(matchedIndex);
+                const activeExp = experiences[matchedIndex];
+                setValue("company", activeExp.company);
+                setValue("date", activeExp.date);
+                setValue("location", activeExp.location);
+                setValue("position", activeExp.position);
+                setValue("summary", activeExp.summary);
+                setValue("website", activeExp.website);
+                setValue("id", activeExp.id);
+            }
+        }
+    }, [experiences, activeExpId, setValue]);
+
+    const { mutate: updateExperienceMutation, isPending } = useMutation({
+        mutationFn: async (updatedProfiles: ExperienceSchemaType[]) => {
+            return await updateExperience(resumeId, updatedProfiles);
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["resumeById", resumeId] });
-            toast("Experience has been created", {
+            toast("Experience has been updated", {
                 action: {
                     label: "Undo",
                     onClick: () => { },
@@ -68,20 +93,20 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
             });
             setOpenModal(false);
             reset();
+
+            setActiveExpIndex(null);
         },
         onError: () => {
-            toast.error("Failed to create experience");
+            toast.error("Failed to update profile");
         },
     });
 
     const onSubmit = (data: ExperienceSchemaType) => {
-
-
-
-        const finalData = { ...data, id: uuidv4() };
-        createExperienceMutate(finalData)
-        // log to confirm it’s actually added
-        console.log("Submitted data:", finalData);
+        if (activeExpIndex !== null) {
+            const updatedExps = [...experiences];
+            updatedExps[activeExpIndex] = { ...data };
+            updateExperienceMutation(updatedExps);
+        }
     };
 
     return (
@@ -92,6 +117,7 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
                     setOpenModal(open);
                     if (!open) reset();
                 }
+                setOpenModal(open);
             }}
         >
             <DialogContent className="bg-black text-gray-300 min-w-3xl">
@@ -107,7 +133,10 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
                     </DialogDescription>
                 </DialogHeader>
 
-                <form className="flex flex-col gap-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
+                <form
+                    className="flex flex-col gap-3 mt-4"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     {/* Company & Position */}
                     <div className="flex gap-6">
                         <div className="flex flex-col gap-1 w-full text-sm">
@@ -189,4 +218,4 @@ const CreateExperienceModal = ({ openModal, setOpenModal, resumeId }: Props) => 
     );
 };
 
-export default CreateExperienceModal;
+export default EditExperienceModal;
