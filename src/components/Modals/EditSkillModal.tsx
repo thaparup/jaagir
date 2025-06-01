@@ -51,7 +51,7 @@ const EditSkillModal = ({ resumeId, openModal, setOpenModal, activeSkillId, skil
     useEffect(() => {
         if (skills && activeSkillId) {
             const matchedIndex = skills.findIndex(
-                (exp) => exp.id === activeSkillId
+                (skill) => skill.id === activeSkillId
             );
             if (matchedIndex !== -1) {
                 setActiveSkillIndex(matchedIndex);
@@ -83,7 +83,7 @@ const EditSkillModal = ({ resumeId, openModal, setOpenModal, activeSkillId, skil
             setActiveSkillIndex(null);
         },
         onError: () => {
-            toast.error("Failed to update profile");
+            toast.error("Failed to update skill");
         },
     });
 

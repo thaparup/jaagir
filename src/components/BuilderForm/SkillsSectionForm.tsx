@@ -94,15 +94,15 @@ const SkillsSectionForm = ({ resume }: Props) => {
         }
     }
 
-    const handleEdit = (expId?: string) => {
-        setActiveSkillId(expId!);
+    const handleEdit = (skillId?: string) => {
+        setActiveSkillId(skillId!);
         setShowEditModal(true);
     };
 
-    const handleDelete = (expId?: string) => {
-        if (expId) {
+    const handleDelete = (skillId?: string) => {
+        if (skillId) {
             setShowAlert(true);
-            setActiveSkillId(expId);
+            setActiveSkillId(skillId);
         }
     };
 
