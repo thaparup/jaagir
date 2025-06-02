@@ -16,8 +16,8 @@ import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
 import { List, Pencil, Trash } from "lucide-react";
 import Alert from "../Alert";
-import CreateProjectModal from "../Modals/CreateProjectModal";
-import EditProjectModal from "../Modals/EditProjectModal";
+import CreateProjectModal from "../Modals/Projects/CreateProjectModal";
+import EditProjectModal from "../Modals/Projects/EditProjectModal";
 
 type Props = {
     resume: ResumeSchemaType;

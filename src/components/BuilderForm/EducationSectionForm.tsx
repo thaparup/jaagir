@@ -4,7 +4,7 @@ import { EducationSchemaType, ResumeSchemaType } from "@/schema/builder.schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
-import CreateEducationModal from "../Modals/CreateEducationModal";
+import CreateEducationModal from "../Modals/Educations/CreateEducationModal";
 import DndProvider from "../DndProvider";
 import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
@@ -16,7 +16,7 @@ import {
     reorderResumeEducation,
 } from "@/actions/Builder/education.action";
 import { toast } from "sonner";
-import EditEducationModal from "../Modals/EditEducationModal";
+import EditEducationModal from "../Modals/Educations/EditEducationModal";
 import Alert from "../Alert";
 
 type Props = {

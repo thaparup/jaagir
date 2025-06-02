@@ -2,10 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Notebook } from "phosphor-react";
 import { Button } from "../ui/button";
-import {
-    ReferenceSchemaType,
-    ResumeSchemaType,
-} from "@/schema/builder.schema";
+import { ReferenceSchemaType, ResumeSchemaType } from "@/schema/builder.schema";
 
 import DndProvider from "../DndProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -22,8 +19,8 @@ import { List, Pencil, Trash } from "lucide-react";
 
 import Alert from "../Alert";
 
-import EditReferenceModal from "../Modals/EditReferenceModal";
-import CreateReferenceModal from "../Modals/CreateReferenceModal";
+import EditReferenceModal from "../Modals/References/EditReferenceModal";
+import CreateReferenceModal from "../Modals/References/CreateReferenceModal";
 
 type Props = {
     resume: ResumeSchemaType;
@@ -58,7 +55,8 @@ const ReferenceSectionForm = ({ resume }: Props) => {
             setActiveRefId("");
             setShowAlert(false);
             toast.error(
-                `Error deleting reference: ${error instanceof Error ? error.message : "Unknown error"}`
+                `Error deleting reference: ${error instanceof Error ? error.message : "Unknown error"
+                }`
             );
         },
     });
@@ -157,7 +155,11 @@ const ReferenceSectionForm = ({ resume }: Props) => {
                 </div>
             </DndProvider>
 
-            <Button type="button" onClick={() => setShowCreateModal(true)} className="mt-6">
+            <Button
+                type="button"
+                onClick={() => setShowCreateModal(true)}
+                className="mt-6"
+            >
                 Add New Reference
             </Button>
 

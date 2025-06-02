@@ -3,9 +3,9 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { User } from "phosphor-react";
-import CustomFieldsForm from "../CustomFieldsForm";
 
-const BassicSectionForm = () => {
+type Props = {};
+const BassicSectionForm = ({ }: Props) => {
     const { register } = useFormContext();
 
     return (
@@ -76,21 +76,20 @@ const BassicSectionForm = () => {
                 </label>
                 <input
                     {...register("phoneNumber")}
-                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-1"
+                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-2 text-sm"
                 />
             </div>
 
-            <div className="flex flex-col gap-2 pt-4">
+            <div className="flex flex-col gap-2 py-4">
                 <label htmlFor="location" className="text-gray-400 font-medium">
                     Location
                 </label>
                 <input
                     {...register("location")}
-                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-1"
+                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-2 text-sm"
                 />
             </div>
 
-            <CustomFieldsForm />
             <hr />
         </div>
     );

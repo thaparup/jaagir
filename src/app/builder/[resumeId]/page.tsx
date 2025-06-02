@@ -17,8 +17,6 @@ import ResumePreview from "@/components/ResumePreview";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
 import SummarySectionForm from "@/components/BuilderForm/SummarySectionForm";
 import watch from 'react-hook-form'
-import ProfilesModal from "@/components/Modals/CreateProfileModal";
-import ProfileSectionForm from "@/components/BuilderForm/ProfileSectionForm";
 import OtherRemainingSections from "@/components/BuilderForm/OtherRemainingSections";
 const Page = () => {
     const [openModalProfile, setOpenModalProfile] = useState(false)
@@ -140,7 +138,7 @@ const Page = () => {
                 <FormProvider {...methods}>
                     <form className="" onChange={handleFormChange}>
                         <BassicSectionForm />
-                        <SummarySectionForm />
+                        {/* <SummarySectionForm /> */}
                     </form>
                 </FormProvider>
 

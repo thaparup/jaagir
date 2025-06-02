@@ -1,11 +1,6 @@
 import { string, z } from "zod";
 import * as PhosphorIcons from "phosphor-react";
 
-const BasicCustomFieldType = z.object({
-  icon: z.string(),
-  name: z.string(),
-  value: z.string(),
-});
 export const ProfileSchema = z
   .object({
     id: z.string(),
@@ -28,11 +23,18 @@ export const ProfilesSchema = z.object({
 export type ProfileType = z.infer<typeof ProfileSchema>;
 
 {
-  /*  **************************** Profile ********************************************************************************** */
+  /*  **************************** Basic custom Field ********************************************************************************** */
 }
+export const BasicCustomFieldSchema = z.object({
+  id: z.string(),
+  icon: z.string(),
+  name: z.string(),
+  value: z.string(),
+});
 
+export type BasicCustomFieldType = z.infer<typeof BasicCustomFieldSchema>;
 {
-  /*  **************************** Profile ********************************************************************************** */
+  /*  **************************** Basic cusotm Field ********************************************************************************** */
 }
 
 {
@@ -202,7 +204,7 @@ export const ResumeSchema = z.object({
 
   location: z.string().nullable().optional(),
 
-  basicCustomField: z.array(BasicCustomFieldType).nullable(),
+  basicCustomField: z.array(BasicCustomFieldSchema).nullable(),
   profiles: z.array(ProfileSchema).nullable(),
   experiences: z.array(ExperienceSchema).nullable(),
   skills: z.array(SkillSchema).nullable(),

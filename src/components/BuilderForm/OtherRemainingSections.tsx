@@ -9,6 +9,7 @@ import ProjectSectionForm from './ProjectSectionForm'
 import AwardSectionForm from './AwardSectionForm'
 import ReferenceSectionForm from './ReferenceSectionForm'
 import InterestSectionForm from './InterestSectionForm'
+import BasicCustomFieldSectionForm from './BasicCustomFieldSectionForm'
 
 type Props = {
     resume: ResumeResponseSchemaType
@@ -19,6 +20,7 @@ const OtherRemainingSections = ({ resume }: Props) => {
 
     return (
         <div>
+            <BasicCustomFieldSectionForm resume={resume?.data!} />
             asdsadsad
             {/* <ProfileSectionForm resume={resume} /> */}
             {/* <ExperienceSectionForm resume={resume?.data!} /> */}

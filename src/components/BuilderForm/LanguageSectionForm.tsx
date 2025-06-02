@@ -21,8 +21,8 @@ import Menu from "../Menu";
 import { List, Pencil, Trash } from "lucide-react";
 
 import Alert from "../Alert";
-import CreateLanguageModal from "../Modals/CreateLanguageModal";
-import EditLanguageModal from "../Modals/EditLangauageModal";
+import CreateLanguageModal from "../Modals/Languages/CreateLanguageModal";
+import EditLanguageModal from "../Modals/Languages/EditLangauageModal";
 
 type Props = {
     resume: ResumeSchemaType;

@@ -21,8 +21,8 @@ import Menu from "../Menu";
 import { List, Pencil, Trash } from "lucide-react";
 
 import Alert from "../Alert";
-import CreateInterestModal from "../Modals/CreateInterestModal";
-import EditInterestModal from "../Modals/EditInterestModal";
+import CreateInterestModal from "../Modals/Interests/CreateInterestModal";
+import EditInterestModal from "../Modals/Interests/EditInterestModal";
 
 type Props = {
     resume: ResumeSchemaType;

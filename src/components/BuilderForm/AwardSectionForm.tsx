@@ -2,10 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Trophy } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-    AwardSchemaType,
-    ResumeSchemaType,
-} from "@/schema/builder.schema";
+import { AwardSchemaType, ResumeSchemaType } from "@/schema/builder.schema";
 
 import DndProvider from "../DndProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -21,8 +18,8 @@ import Menu from "../Menu";
 import { List, Pencil, Trash } from "lucide-react";
 
 import Alert from "../Alert";
-import CreateAwardModal from "../Modals/CreateAwardModal";
-import EditAwardModal from "../Modals/EditAwardModal";
+import CreateAwardModal from "../Modals/Awards/CreateAwardModal";
+import EditAwardModal from "../Modals/Awards/EditAwardModal";
 
 type Props = {
     resume: ResumeSchemaType;
@@ -57,7 +54,8 @@ const AwardSectionForm = ({ resume }: Props) => {
             setActiveAwardId("");
             setShowAlert(false);
             toast.error(
-                `Error deleting award: ${error instanceof Error ? error.message : "Unknown error"}`
+                `Error deleting award: ${error instanceof Error ? error.message : "Unknown error"
+                }`
             );
         },
     });
@@ -153,7 +151,11 @@ const AwardSectionForm = ({ resume }: Props) => {
                 </div>
             </DndProvider>
 
-            <Button type="button" onClick={() => setShowCreateModal(true)} className="mt-6">
+            <Button
+                type="button"
+                onClick={() => setShowCreateModal(true)}
+                className="mt-6"
+            >
                 Add New Award
             </Button>
 
