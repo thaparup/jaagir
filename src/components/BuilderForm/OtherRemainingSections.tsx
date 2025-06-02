@@ -7,6 +7,7 @@ import EducationSectionForm from './EducationSectionForm'
 import LanguageSectionForm from './LanguageSectionForm'
 import ProjectSectionForm from './ProjectSectionForm'
 import AwardSectionForm from './AwardSectionForm'
+import ReferenceSectionForm from './ReferenceSectionForm'
 
 type Props = {
     resume: ResumeResponseSchemaType
@@ -24,7 +25,8 @@ const OtherRemainingSections = ({ resume }: Props) => {
             {/* <EducationSectionForm resume={resume?.data!} /> */}
             {/* <LanguageSectionForm resume={resume?.data!} /> */}
             {/* <ProjectSectionForm resume={resume?.data!} /> */}
-            <AwardSectionForm resume={resume?.data!} />
+            {/* <AwardSectionForm resume={resume?.data!} /> */}
+            <ReferenceSectionForm resume={resume?.data!} />
         </div>
     )
 }

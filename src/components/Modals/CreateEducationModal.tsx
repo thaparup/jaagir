@@ -103,7 +103,6 @@ const CreateEducationModal = ({ resumeId, openModal, setOpenModal }: Props) => {
                     className="flex flex-col gap-3 mt-0"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-
                     {/* Institution &  Type Of Study */}
 
                     <div className="flex gap-6">
@@ -114,7 +113,9 @@ const CreateEducationModal = ({ resumeId, openModal, setOpenModal }: Props) => {
                                 className="bg-gray-800 border border-gray-600 outline-none focus:border-primary rounded-sm placeholder:text-gray-500 px-3 py-2 w-full text-white"
                             />
                             {errors.institution && (
-                                <p className="text-red-500 text-sm">{errors.institution.message}</p>
+                                <p className="text-red-500 text-sm">
+                                    {errors.institution.message}
+                                </p>
                             )}
                         </div>
                         <div className="flex flex-col gap-1 w-full text-sm">
