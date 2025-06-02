@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Plus, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createResume } from '@/actions/builder.action'
+import { createResume } from '@/actions/Builder/builder.action'
 import { Button } from './ui/button'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'

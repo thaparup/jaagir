@@ -23,7 +23,7 @@ import {
 import { ProfileSchema, ProfileType } from "@/schema/builder.schema";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProfile } from "@/actions/builder.action";
+import { createProfile } from "@/actions/Builder/builder.action";
 import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
 type Props = {

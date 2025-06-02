@@ -36,7 +36,7 @@ const BassicSectionForm = () => {
                 </label>
                 <input
                     {...register("fullName")}
-                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-1"
+                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-2 text-sm"
                 />
             </div>
 
@@ -46,7 +46,7 @@ const BassicSectionForm = () => {
                 </label>
                 <input
                     {...register("headLine")}
-                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-1"
+                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-2 text-sm"
                 />
             </div>
 
@@ -56,7 +56,7 @@ const BassicSectionForm = () => {
                 </label>
                 <input
                     {...register("email")}
-                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-1"
+                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-2 text-sm"
                 />
             </div>
 
@@ -66,7 +66,7 @@ const BassicSectionForm = () => {
                 </label>
                 <input
                     {...register("website")}
-                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-1"
+                    className="outline-1 outline-gray-700/80 focus:outline-white rounded-sm placeholder:text-gray-600 p-2 text-sm"
                 />
             </div>
 

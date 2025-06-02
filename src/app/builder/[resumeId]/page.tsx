@@ -1,6 +1,6 @@
 
 "use client";
-import { fetchResumeById, updateResume } from "@/actions/builder.action";
+import { fetchResumeById, updateResume } from "@/actions/Builder/builder.action";
 import {
     ResumeResponseSchemaType,
     ResumeSchemaType,
@@ -137,12 +137,12 @@ const Page = () => {
 
             <div className="space-y-6 pb-10 w-[40%]">
 
-                {/* <FormProvider {...methods}>
+                <FormProvider {...methods}>
                     <form className="" onChange={handleFormChange}>
                         <BassicSectionForm />
                         <SummarySectionForm />
                     </form>
-                </FormProvider> */}
+                </FormProvider>
 
                 <OtherRemainingSections resume={fetchedResumeData!} />
             </div>

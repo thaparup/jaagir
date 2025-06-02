@@ -1,5 +1,5 @@
 'use client'
-import { createResume } from '@/actions/builder.action'
+import { createResume } from '@/actions/Builder/builder.action'
 import { BuilderSchema, BuilderSchemaType } from '@/schema/builder.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'

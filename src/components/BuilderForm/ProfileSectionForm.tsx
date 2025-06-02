@@ -9,7 +9,7 @@ import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import DndProvider from "../DndProvider";
 import { SortableItem } from "../SortableItem";
-import { deleteProfile, reorderResumeProfiles } from "@/actions/builder.action";
+import { deleteProfile, reorderResumeProfiles } from "@/actions/Builder/builder.action";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Menu from "../Menu";

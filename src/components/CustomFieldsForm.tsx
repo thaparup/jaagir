@@ -212,7 +212,7 @@ const CustomFieldsForm = () => {
 
             <button
                 onClick={() => append({ icon: "EnvelopeSimpleOpen", name: "", value: "" })}
-                className="flex gap-3 items-center text-white py-4 rounded"
+                className="flex gap-3 items-center text-white py-4 rounded cursor-pointer"
                 type="button"
             >
                 <PhosphorIcons.Plus size={20} />

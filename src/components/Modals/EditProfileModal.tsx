@@ -23,7 +23,7 @@ import {
 import { ProfileSchema, ProfileType } from "@/schema/builder.schema";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateProfile } from "@/actions/builder.action";
+import { updateProfile } from "@/actions/Builder/builder.action";
 
 type Props = {
     openModal: boolean;
