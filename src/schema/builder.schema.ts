@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { string, z } from "zod";
 import * as PhosphorIcons from "phosphor-react";
 
 const BasicCustomFieldType = z.object({
@@ -127,6 +127,56 @@ export type ProjectSchemaType = z.infer<typeof ProjectSchema>;
 }
 
 {
+  /*  **************************** Awards ********************************************************************************** */
+}
+
+export const AwardSchema = z.object({
+  id: string(),
+  title: z.string().nonempty("at least one character is required"),
+  awarder: z.string(),
+  date: z.string(),
+  website: z.string(),
+  summary: z.string(),
+});
+export type AwardSchemaType = z.infer<typeof AwardSchema>;
+
+{
+  /*  **************************** Awards ********************************************************************************** */
+}
+
+{
+  /*  **************************** references ********************************************************************************** */
+}
+
+export const ReferenceSchema = z.object({
+  id: z.string(),
+  name: z.string().nonempty("at least one character is required"),
+  description: z.string(),
+  website: z.string(),
+  summary: z.string(),
+});
+export type ReferenceSchemaType = z.infer<typeof ReferenceSchema>;
+
+{
+  /*  **************************** references ********************************************************************************** */
+}
+
+export const InterestSchema = z.object({
+  id: z.string(),
+  name: z.string().nonempty("at least one character is required"),
+});
+
+export type InterestSchemaType = z.infer<typeof InterestSchema>;
+
+{
+  /*  **************************** interest ********************************************************************************** */
+}
+
+{
+  /*  **************************** interest ********************************************************************************** */
+}
+
+{
   /* ********************************************* Resume ************************************************************************* */
 }
 
@@ -159,6 +209,9 @@ export const ResumeSchema = z.object({
   education: z.array(EducationSchema).nullable(),
   languages: z.array(LanguageSchema).nullable(),
   projects: z.array(ProjectSchema).nullable(),
+  awards: z.array(AwardSchema).nullable(),
+  references: z.array(ReferenceSchema).nullable(),
+  interest: z.array(InterestSchema).nullable(),
 });
 
 export const ResumeResponseSchema = z.object({

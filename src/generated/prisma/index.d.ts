@@ -935,6 +935,9 @@ export namespace Prisma {
     education: number
     projects: number
     languages: number
+    awards: number
+    references: number
+    interest: number
     updatedAt: number
     _all: number
   }
@@ -994,6 +997,9 @@ export namespace Prisma {
     education?: true
     projects?: true
     languages?: true
+    awards?: true
+    references?: true
+    interest?: true
     updatedAt?: true
     _all?: true
   }
@@ -1102,6 +1108,9 @@ export namespace Prisma {
     education: JsonValue | null
     projects: JsonValue | null
     languages: JsonValue | null
+    awards: JsonValue | null
+    references: JsonValue | null
+    interest: JsonValue | null
     updatedAt: Date
     _count: ResumeCountAggregateOutputType | null
     _avg: ResumeAvgAggregateOutputType | null
@@ -1142,6 +1151,9 @@ export namespace Prisma {
     education?: boolean
     projects?: boolean
     languages?: boolean
+    awards?: boolean
+    references?: boolean
+    interest?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1163,6 +1175,9 @@ export namespace Prisma {
     education?: boolean
     projects?: boolean
     languages?: boolean
+    awards?: boolean
+    references?: boolean
+    interest?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1184,6 +1199,9 @@ export namespace Prisma {
     education?: boolean
     projects?: boolean
     languages?: boolean
+    awards?: boolean
+    references?: boolean
+    interest?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["resume"]>
 
@@ -1205,10 +1223,13 @@ export namespace Prisma {
     education?: boolean
     projects?: boolean
     languages?: boolean
+    awards?: boolean
+    references?: boolean
+    interest?: boolean
     updatedAt?: boolean
   }
 
-  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "picture" | "fullName" | "headLine" | "email" | "website" | "summary" | "phoneNumber" | "location" | "basicCustomField" | "profiles" | "experiences" | "skills" | "education" | "projects" | "languages" | "updatedAt", ExtArgs["result"]["resume"]>
+  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "picture" | "fullName" | "headLine" | "email" | "website" | "summary" | "phoneNumber" | "location" | "basicCustomField" | "profiles" | "experiences" | "skills" | "education" | "projects" | "languages" | "awards" | "references" | "interest" | "updatedAt", ExtArgs["result"]["resume"]>
 
   export type $ResumePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Resume"
@@ -1231,6 +1252,9 @@ export namespace Prisma {
       education: Prisma.JsonValue | null
       projects: Prisma.JsonValue | null
       languages: Prisma.JsonValue | null
+      awards: Prisma.JsonValue | null
+      references: Prisma.JsonValue | null
+      interest: Prisma.JsonValue | null
       updatedAt: Date
     }, ExtArgs["result"]["resume"]>
     composites: {}
@@ -1672,6 +1696,9 @@ export namespace Prisma {
     readonly education: FieldRef<"Resume", 'Json'>
     readonly projects: FieldRef<"Resume", 'Json'>
     readonly languages: FieldRef<"Resume", 'Json'>
+    readonly awards: FieldRef<"Resume", 'Json'>
+    readonly references: FieldRef<"Resume", 'Json'>
+    readonly interest: FieldRef<"Resume", 'Json'>
     readonly updatedAt: FieldRef<"Resume", 'DateTime'>
   }
     
@@ -2071,6 +2098,9 @@ export namespace Prisma {
     education: 'education',
     projects: 'projects',
     languages: 'languages',
+    awards: 'awards',
+    references: 'references',
+    interest: 'interest',
     updatedAt: 'updatedAt'
   };
 
@@ -2217,6 +2247,9 @@ export namespace Prisma {
     education?: JsonNullableFilter<"Resume">
     projects?: JsonNullableFilter<"Resume">
     languages?: JsonNullableFilter<"Resume">
+    awards?: JsonNullableFilter<"Resume">
+    references?: JsonNullableFilter<"Resume">
+    interest?: JsonNullableFilter<"Resume">
     updatedAt?: DateTimeFilter<"Resume"> | Date | string
   }
 
@@ -2238,6 +2271,9 @@ export namespace Prisma {
     education?: SortOrderInput | SortOrder
     projects?: SortOrderInput | SortOrder
     languages?: SortOrderInput | SortOrder
+    awards?: SortOrderInput | SortOrder
+    references?: SortOrderInput | SortOrder
+    interest?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
   }
 
@@ -2262,6 +2298,9 @@ export namespace Prisma {
     education?: JsonNullableFilter<"Resume">
     projects?: JsonNullableFilter<"Resume">
     languages?: JsonNullableFilter<"Resume">
+    awards?: JsonNullableFilter<"Resume">
+    references?: JsonNullableFilter<"Resume">
+    interest?: JsonNullableFilter<"Resume">
     updatedAt?: DateTimeFilter<"Resume"> | Date | string
   }, "id">
 
@@ -2283,6 +2322,9 @@ export namespace Prisma {
     education?: SortOrderInput | SortOrder
     projects?: SortOrderInput | SortOrder
     languages?: SortOrderInput | SortOrder
+    awards?: SortOrderInput | SortOrder
+    references?: SortOrderInput | SortOrder
+    interest?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: ResumeCountOrderByAggregateInput
     _avg?: ResumeAvgOrderByAggregateInput
@@ -2312,6 +2354,9 @@ export namespace Prisma {
     education?: JsonNullableWithAggregatesFilter<"Resume">
     projects?: JsonNullableWithAggregatesFilter<"Resume">
     languages?: JsonNullableWithAggregatesFilter<"Resume">
+    awards?: JsonNullableWithAggregatesFilter<"Resume">
+    references?: JsonNullableWithAggregatesFilter<"Resume">
+    interest?: JsonNullableWithAggregatesFilter<"Resume">
     updatedAt?: DateTimeWithAggregatesFilter<"Resume"> | Date | string
   }
 
@@ -2333,6 +2378,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2354,6 +2402,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2375,6 +2426,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2396,6 +2450,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2417,6 +2474,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -2438,6 +2498,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2459,6 +2522,9 @@ export namespace Prisma {
     education?: NullableJsonNullValueInput | InputJsonValue
     projects?: NullableJsonNullValueInput | InputJsonValue
     languages?: NullableJsonNullValueInput | InputJsonValue
+    awards?: NullableJsonNullValueInput | InputJsonValue
+    references?: NullableJsonNullValueInput | InputJsonValue
+    interest?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -2560,6 +2626,9 @@ export namespace Prisma {
     education?: SortOrder
     projects?: SortOrder
     languages?: SortOrder
+    awards?: SortOrder
+    references?: SortOrder
+    interest?: SortOrder
     updatedAt?: SortOrder
   }
 

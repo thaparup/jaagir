@@ -34,7 +34,9 @@ const EditProjectModal = ({
     projects,
 }: Props) => {
     const queryClient = useQueryClient();
-    const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null);
+    const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(
+        null
+    );
 
     const {
         register,
@@ -57,16 +59,18 @@ const EditProjectModal = ({
 
     useEffect(() => {
         if (projects && activeProjectId) {
-            const matchedIndex = projects.findIndex((proj) => proj.id === activeProjectId);
+            const matchedIndex = projects.findIndex(
+                (proj) => proj.id === activeProjectId
+            );
             if (matchedIndex !== -1) {
                 setActiveProjectIndex(matchedIndex);
                 const activeProject = projects[matchedIndex];
-                setValue('date', activeProject.date)
-                setValue('description', activeProject.description)
-                setValue('id', activeProject.id)
-                setValue('name', activeProject.name)
-                setValue('summary', activeProject.summary)
-                setValue('website', activeProject.website)
+                setValue("date", activeProject.date);
+                setValue("description", activeProject.description);
+                setValue("id", activeProject.id);
+                setValue("name", activeProject.name);
+                setValue("summary", activeProject.summary);
+                setValue("website", activeProject.website);
             }
         }
     }, [projects, activeProjectId]);
@@ -118,7 +122,10 @@ const EditProjectModal = ({
                     </DialogDescription>
                 </DialogHeader>
 
-                <form className="flex flex-col gap-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
+                <form
+                    className="flex flex-col gap-3 mt-4"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     {/* Name & Description */}
                     <div className="flex gap-6">
                         <div className="flex flex-col gap-1 w-full text-sm">
@@ -158,8 +165,6 @@ const EditProjectModal = ({
                             />
                         </div>
                     </div>
-
-
 
                     {/* Summary */}
                     <label htmlFor="" className="font-semibold">
