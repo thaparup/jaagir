@@ -6,7 +6,7 @@ import {
     ExperienceSchemaType,
     ResumeSchemaType,
 } from "@/schema/builder.schema";
-import CreateExperienceModal from "../Modals/CreateExperienceModal";
+
 import DndProvider from "../DndProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DragEndEvent } from "@dnd-kit/core";
@@ -18,9 +18,10 @@ import {
 } from "@/actions/Builder/experience.action";
 import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
-import { List, Pencil, Trash } from "lucide-react";
-import EditExperienceModal from "../Modals/EditExperienceModal";
+import { List, Pencil, Plus, Trash } from "lucide-react";
 import Alert from "../Alert";
+import EditExperienceModal from "../Modals/Experiences/EditExperienceModal";
+import CreateExperienceModal from "../Modals/Experiences/CreateExperienceModal";
 
 type Props = {
     resume: ResumeSchemaType;
@@ -40,6 +41,7 @@ const ExperienceSectionForm = ({ resume }: Props) => {
     useEffect(() => {
         if (resume.experiences) {
             setexperiences(resume.experiences);
+            console.log(resume.experiences)
         }
     }, [resume]);
 
@@ -108,63 +110,66 @@ const ExperienceSectionForm = ({ resume }: Props) => {
         deleteMutation.mutate(filteredExps);
     };
     return (
-        <div className="px-8">
+        <div className="p-8">
             <div className="flex gap-6 items-center mb-6">
-                <Notebook />
-                <h3 className="text-2xl font-medium text-white">Experience</h3>
+                <Notebook size={24} />
+                <h3 className="text-2xl font-medium text-white">Experiences</h3>
             </div>
 
-            <DndProvider onDragEnd={handleDragEnd} items={experiences}>
-                <div className="flex flex-col gap-4 p-8 border-4 border-red-700">
-                    {experiences.map((exp) => (
-                        <SortableItem key={exp.id} uuid={exp.id}>
-                            <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
-                                <div className="flex flex-col gap-1 px-6 py-3 w-full">
-                                    <span className="font-semibold text-sm text-white">
-                                        {exp.company!}
-                                    </span>
-                                    <span className="font-medium text-sm text-gray-400">
-                                        {exp.position || exp.location || exp.website}
-                                    </span>
+            {resume?.experiences!.length > 0 ? <>
+                <DndProvider onDragEnd={handleDragEnd} items={experiences}>
+                    <div className="flex flex-col gap-4 px-6">
+                        {experiences.map((exp) => (
+                            <SortableItem key={exp.id} uuid={exp.id}>
+                                <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
+                                    <div className="flex flex-col gap-1 px-6 py-3 w-full">
+                                        <span className="font-semibold text-sm text-white">
+                                            {exp.company!}
+                                        </span>
+                                        <span className="font-medium text-sm text-gray-400">
+                                            {exp.position || exp.location || exp.website}
+                                        </span>
+                                    </div>
+
+                                    <div className="mr-4 cursor-pointer ">
+                                        <Menu
+                                            key={activeExpId}
+                                            id={exp.id}
+                                            triggerLabel={<List size={20} />}
+                                            items={[
+                                                {
+                                                    label: "Edit",
+                                                    icon: <Pencil />,
+                                                    iconClassName: "",
+                                                    onClick: handleEdit,
+                                                },
+                                                {
+                                                    label: "Delete",
+                                                    icon: <Trash />,
+                                                    iconClassName: "",
+                                                    onClick: handleDelete,
+                                                },
+                                            ]}
+                                            menuClassName="bg-black text-gray-400 shadow-lg"
+                                            menuItemClassName="hover:cursor-pointer hover:!bg-gray-300 focus:!bg-gray-300 data-[highlighted]:!bg-gray-300 data-[state=open]:!bg--300 my-2 hover:!text-gray-800"
+                                        />
+                                    </div>
                                 </div>
+                            </SortableItem>
+                        ))}
+                    </div>
+                </DndProvider>
+            </> : "No experiences yet!"}
 
-                                <div className="mr-4 cursor-pointer ">
-                                    <Menu
-                                        key={activeExpId}
-                                        id={exp.id}
-                                        triggerLabel={<List size={20} />}
-                                        items={[
-                                            {
-                                                label: "Edit",
-                                                icon: <Pencil />,
-                                                iconClassName: "",
-                                                onClick: handleEdit,
-                                            },
-                                            {
-                                                label: "Delete",
-                                                icon: <Trash />,
-                                                iconClassName: "",
-                                                onClick: handleDelete,
-                                            },
-                                        ]}
-                                        menuClassName="bg-black text-gray-400 shadow-lg"
-                                        menuItemClassName="hover:cursor-pointer hover:!bg-gray-300 focus:!bg-gray-300 data-[highlighted]:!bg-gray-300 data-[state=open]:!bg--300 my-2 hover:!text-gray-800"
-                                    />
-                                </div>
-                            </div>
-                        </SortableItem>
-                    ))}
-                </div>
-            </DndProvider>
-
-            <Button
-                type="button"
-                onClick={() => setShowCreateModal(true)}
-                className="mt-6 "
-            >
-                Add New Experience
-            </Button>
-
+            <div className="flex justify-end mb-8 mr-6">
+                <Button
+                    type="button"
+                    onClick={() => setShowCreateModal(true)}
+                    className="mt-6 "
+                >
+                    <Plus /> Experience
+                </Button>
+            </div>
             <CreateExperienceModal
                 openModal={showCreateModal}
                 setOpenModal={setShowCreateModal}
@@ -187,6 +192,7 @@ const ExperienceSectionForm = ({ resume }: Props) => {
                 actionText="Delete"
                 onConfirm={confirmDelete}
             />
+            <hr />
         </div>
     );
 };

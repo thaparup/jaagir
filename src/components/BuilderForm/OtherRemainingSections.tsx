@@ -10,6 +10,7 @@ import AwardSectionForm from './AwardSectionForm'
 import ReferenceSectionForm from './ReferenceSectionForm'
 import InterestSectionForm from './InterestSectionForm'
 import BasicCustomFieldSectionForm from './BasicCustomFieldSectionForm'
+import SummarySectionForm from './SummarySectionForm'
 
 type Props = {
     resume: ResumeResponseSchemaType
@@ -21,16 +22,15 @@ const OtherRemainingSections = ({ resume }: Props) => {
     return (
         <div>
             <BasicCustomFieldSectionForm resume={resume?.data!} />
-            asdsadsad
-            {/* <ProfileSectionForm resume={resume} /> */}
-            {/* <ExperienceSectionForm resume={resume?.data!} /> */}
-            {/* <SkillsSectionForm resume={resume?.data!} /> */}
-            {/* <EducationSectionForm resume={resume?.data!} /> */}
-            {/* <LanguageSectionForm resume={resume?.data!} /> */}
-            {/* <ProjectSectionForm resume={resume?.data!} /> */}
-            {/* <AwardSectionForm resume={resume?.data!} /> */}
-            {/* <ReferenceSectionForm resume={resume?.data!} /> */}
-            {/* <InterestSectionForm resume={resume?.data!} /> */}
+            <SummarySectionForm resume={resume?.data!} />
+            <ProfileSectionForm resume={resume} />
+            <ExperienceSectionForm resume={resume?.data!} />
+            <SkillsSectionForm resume={resume?.data!} />
+            <LanguageSectionForm resume={resume?.data!} />
+            <ProjectSectionForm resume={resume?.data!} />
+            <AwardSectionForm resume={resume?.data!} />
+            <ReferenceSectionForm resume={resume?.data!} />
+            <InterestSectionForm resume={resume?.data!} />
         </div>
     )
 }

@@ -7,16 +7,16 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AwardSchema, AwardSchemaType } from "@/schema/builder.schema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Pencil } from "phosphor-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { updateAward } from "@/actions/Builder/award.action";
-import RichTextEditor from "../RichTextEditor";
+import RichTextEditor from "@/components/RichTextEditor";
 
 type Props = {
     openModal: boolean;

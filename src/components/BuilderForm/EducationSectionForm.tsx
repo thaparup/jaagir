@@ -8,7 +8,7 @@ import CreateEducationModal from "../Modals/Educations/CreateEducationModal";
 import DndProvider from "../DndProvider";
 import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
-import { List, Pencil, Trash } from "lucide-react";
+import { BookOpen, List, Pencil, Plus, Trash } from "lucide-react";
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import {
@@ -104,9 +104,14 @@ const EducationSectionForm = ({ resume }: Props) => {
         deleteMutation.mutate(filteredEducations);
     };
     return (
-        <div>
+        <div className="px-8 mt-8">
+            <div className="flex gap-6 items-center mb-6">
+                <BookOpen />
+                <h3 className="text-2xl font-medium text-white">Education</h3>
+            </div>
+
             <DndProvider onDragEnd={handleDragEnd} items={educations}>
-                <div className="flex flex-col gap-4 p-8 border-4 border-red-700">
+                <div className="flex flex-col gap-4 px-6">
                     {educations.map((edu) => (
                         <SortableItem key={edu.id} uuid={edu.id}>
                             <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
@@ -151,13 +156,18 @@ const EducationSectionForm = ({ resume }: Props) => {
                 </div>
             </DndProvider>
 
-            <Button
-                type="button"
-                onClick={() => setShowCreateModal(true)}
-                className="mt-6 "
-            >
-                Add New Eduction
-            </Button>
+
+
+            <div className="flex justify-end mb-8 mr-6">
+                <Button
+                    type="button"
+                    onClick={() => setShowCreateModal(true)}
+                    className="mt-6 "
+                >
+                    <span><Plus /></span> Eduction
+                </Button>
+
+            </div>
 
             <CreateEducationModal
                 openModal={showCreateModal}
@@ -181,6 +191,7 @@ const EducationSectionForm = ({ resume }: Props) => {
                 actionText="Delete"
                 onConfirm={confirmDelete}
             />
+            <hr />
         </div>
     );
 };

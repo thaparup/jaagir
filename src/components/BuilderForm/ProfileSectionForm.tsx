@@ -1,20 +1,23 @@
 "use client";
 
-import { Pencil, Trash, Waypoints } from "lucide-react";
+import { Pencil, Plus, Trash, Waypoints } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { ProfileType, ResumeResponseSchemaType } from "@/schema/builder.schema";
-import { List, } from "phosphor-react";
+import { List } from "phosphor-react";
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import DndProvider from "../DndProvider";
 import { SortableItem } from "../SortableItem";
-import { deleteProfile, reorderResumeProfiles } from "@/actions/Builder/builder.action";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Menu from "../Menu";
-import EditProfileModal from "../Modals/EditProfileModal";
-import CreateProfileModal from "../Modals/CreateProfileModal";
+import {
+    deleteProfile,
+    reorderResumeProfiles,
+} from "@/actions/Builder/profile.action";
+import CreateProfileModal from "../Modals/Profiles/CreateProfileModal";
+import EditProfileModal from "../Modals/Profiles/EditProfileModal";
 
 type Props = {
     resume: ResumeResponseSchemaType;
@@ -22,8 +25,8 @@ type Props = {
 
 const ProfileSectionForm = ({ resume }: Props) => {
     const [modal, setModal] = useState(false);
-    const [showEditProfileModal, setShowEditProfileModal] = useState(false)
-    const [activeProfileId, setActiveProfileId] = useState('')
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+    const [activeProfileId, setActiveProfileId] = useState("");
     const [items, setItems] = useState<ProfileType[] | []>(
         resume?.data?.profiles!
     );
@@ -65,13 +68,15 @@ const ProfileSectionForm = ({ resume }: Props) => {
 
     const deleteMutation = useMutation({
         mutationFn: async (profile: ProfileType[]) => {
-            console.log('from mutation', profile.length)
-            console.log(profile)
+            console.log("from mutation", profile.length);
+            console.log(profile);
             return await deleteProfile(resume?.data?.id!, profile);
         },
         onSuccess: () => {
             toast.success("Profile deleted successfully");
-            queryClient.invalidateQueries({ queryKey: ["resumeById", resume?.data?.id] });
+            queryClient.invalidateQueries({
+                queryKey: ["resumeById", resume?.data?.id],
+            });
         },
         onError: (error) => {
             toast.error(
@@ -82,66 +87,79 @@ const ProfileSectionForm = ({ resume }: Props) => {
     });
 
     const handleEdit = (profileId?: string) => {
-        console.log(`Edit clicked for profile ID: ${profileId}`);
-        setActiveProfileId(profileId!)
-        setShowEditProfileModal(true)
+        setActiveProfileId(profileId!);
+        setShowEditProfileModal(true);
     };
 
     const handleDelete = (profileId?: string) => {
         if (profileId) {
-            const filteredProfiles = items.filter((profile) => profile.id !== profileId)
-            deleteMutation.mutate(filteredProfiles)
-            console.log(filteredProfiles.length)
+            const filteredProfiles = items.filter(
+                (profile) => profile.id !== profileId
+            );
+            deleteMutation.mutate(filteredProfiles);
         }
     };
 
-
     return (
         <div className="px-8">
-            <div className="flex gap-6 items-center mb-6">
-                <Waypoints className="text-blue-500" />
+            <div className="flex gap-6 items-center ">
+                <Waypoints className="" />
                 <h3 className="text-2xl font-medium text-white">Profiles</h3>
             </div>
-            <DndProvider onDragEnd={handleDragEnd} items={items}>
-                <div className="flex flex-col gap-4 p-8 border-4 border-red-700">
-                    {items.map((profile) => (
-                        <SortableItem key={profile.id} uuid={profile.id}>
-                            <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
-                                <div className="flex flex-col gap-1 px-6 py-3 w-full">
-                                    <span className="font-semibold text-sm text-white">
-                                        {profile.network!}
-                                    </span>
-                                    <span className="font-medium text-sm text-gray-400">
-                                        {profile.username || profile.url}
-                                    </span>
-                                </div>
+            {resume?.data?.profiles?.length ? (<>
+                <DndProvider onDragEnd={handleDragEnd} items={items}>
+                    <div className="flex flex-col gap-4 p-6 ">
+                        {items.map((profile) => (
+                            <SortableItem key={profile.id} uuid={profile.id}>
+                                <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
+                                    <div className="flex flex-col gap-1 px-6 py-3 w-full">
+                                        <span className="font-semibold text-sm text-white">
+                                            {profile.network!}
+                                        </span>
+                                        <span className="font-medium text-sm text-gray-400">
+                                            {profile.username || profile.url}
+                                        </span>
+                                    </div>
 
-                                <div className="mr-4 cursor-pointer ">
-                                    <Menu
-                                        key={activeProfileId}
-                                        id={profile.id}
-                                        triggerLabel={<List size={20} />}
-                                        items={[
-                                            { label: "Edit", icon: <Pencil />, iconClassName: '', onClick: handleEdit },
-                                            { label: "Delete", icon: <Trash />, iconClassName: '', onClick: handleDelete },
-                                        ]}
-                                        menuClassName="bg-black text-gray-400 shadow-lg"
-                                        menuItemClassName="hover:cursor-pointer hover:!bg-gray-300 focus:!bg-gray-300 data-[highlighted]:!bg-gray-300 data-[state=open]:!bg--300 my-2 hover:!text-gray-800"
-                                    />
+                                    <div className="mr-4 cursor-pointer ">
+                                        <Menu
+                                            key={activeProfileId}
+                                            id={profile.id}
+                                            triggerLabel={<List size={20} />}
+                                            items={[
+                                                {
+                                                    label: "Edit",
+                                                    icon: <Pencil />,
+                                                    iconClassName: "",
+                                                    onClick: handleEdit,
+                                                },
+                                                {
+                                                    label: "Delete",
+                                                    icon: <Trash />,
+                                                    iconClassName: "",
+                                                    onClick: handleDelete,
+                                                },
+                                            ]}
+                                            menuClassName="bg-black text-gray-400 shadow-lg"
+                                            menuItemClassName="hover:cursor-pointer hover:!bg-gray-300 focus:!bg-gray-300 data-[highlighted]:!bg-gray-300 data-[state=open]:!bg--300 my-2 hover:!text-gray-800"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </SortableItem>
-                    ))}
-                </div>
-            </DndProvider>
+                            </SortableItem>
+                        ))}
+                    </div>
+                </DndProvider>
+            </>) : "No profiles yet!"}
 
-            <Button
-                type="button"
-                onClick={() => setModal(true)}
-                className="mt-6 bg-blue-600 hover:bg-blue-700"
-            >
-                Add New Profile
-            </Button>
+
+            <div className="flex justify-end mb-8 mr-6">
+                <Button type="button" onClick={() => setModal(true)}>
+                    <span>
+                        <Plus />
+                    </span>{" "}
+                    Custom Field
+                </Button>
+            </div>
             <CreateProfileModal
                 openModal={modal}
                 setOpenModal={setModal}
@@ -155,6 +173,7 @@ const ProfileSectionForm = ({ resume }: Props) => {
                 activeProfileId={activeProfileId}
                 resumeId={resume?.data?.id!}
             />
+            <hr />
         </div>
     );
 };

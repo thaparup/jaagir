@@ -7,16 +7,16 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LanguageSchema, LanguageSchemaType } from "@/schema/builder.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Pencil } from "phosphor-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { updateLanguage } from "@/actions/Builder/language.action";
-import Slider from "../Slider";
+import Slider from "@/components/Slider";
 
 type Props = {
     openModal: boolean;

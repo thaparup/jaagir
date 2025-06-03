@@ -63,6 +63,7 @@
 
 
 
+import useResumeStore from "@/store/zustand/resumeGlobalStyleStore";
 import * as PhosphorIcons from "phosphor-react";
 import type { IconProps } from "phosphor-react";
 
@@ -80,6 +81,7 @@ type Props = {
 };
 
 export default function CustomFieldPreview({ fields }: Props) {
+    const { primaryColor, fontSize } = useResumeStore()
     if (!fields || fields.length === 0) return null;
 
     return (
@@ -90,12 +92,12 @@ export default function CustomFieldPreview({ fields }: Props) {
 
                 return (
                     <div key={index} className="flex items-center gap-1 ">
-                        <div className="flex gap-1 items-center ">
-                            <span className="">
-                                <Icon size={16} />
+                        <div className="flex gap-2 items-center ">
+                            <span style={{ color: primaryColor }}>
+                                <Icon size={fontSize + 2} />
                             </span>
-                            <span className="font-medium ">{field.name}:</span>
-                            <span className="">{field.value}</span>
+                            <span style={{ fontSize: fontSize }}>{field.name}:</span>
+                            <span style={{ fontSize: fontSize }}>{field.value}</span>
                         </div>
 
                         {/* {index < fields.length - 1 && (

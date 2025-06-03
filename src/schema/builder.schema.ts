@@ -195,7 +195,7 @@ export const ResumeSchema = z.object({
 
   website: z.string().url("Invalid URL").nullable().optional(),
 
-  phoneNumber: z.coerce
+  phoneNumber: z
     .number({
       invalid_type_error: "Phone number must be a number",
     })
@@ -203,7 +203,7 @@ export const ResumeSchema = z.object({
     .optional(),
 
   location: z.string().nullable().optional(),
-
+  summary: z.string().optional(),
   basicCustomField: z.array(BasicCustomFieldSchema).nullable(),
   profiles: z.array(ProfileSchema).nullable(),
   experiences: z.array(ExperienceSchema).nullable(),

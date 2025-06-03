@@ -22,6 +22,7 @@ import {
 import CreateBasicCustomFieldModal from "../Modals/BasicCutomField/CreateBasicCustomFieldModal";
 import * as PhosphorIcons from "phosphor-react";
 import EditBasicCustomFieldModal from "../Modals/BasicCutomField/EditBasicCustomFieldModal";
+import { Plus } from "lucide-react";
 
 type Props = {
     resume: ResumeSchemaType;
@@ -109,12 +110,12 @@ const BasicCustomFieldSectionForm = ({ resume }: Props) => {
     return (
         <div className="px-8">
             <div className="flex gap-6 items-center mb-6">
-                <Briefcase />
+                <Briefcase size={24} />
                 <h3 className="text-2xl font-medium text-white">Custom Fields</h3>
             </div>
 
             <DndProvider onDragEnd={handleDragEnd} items={fields}>
-                <div className="flex flex-col gap-4 p-8 border-4 border-blue-700">
+                <div className="flex flex-col gap-4">
                     {fields.map((field) => {
                         const IconComponent =
                             (PhosphorIcons as any)[field.icon] ||
@@ -163,15 +164,18 @@ const BasicCustomFieldSectionForm = ({ resume }: Props) => {
                     })}
                 </div>
             </DndProvider>
-
-            <Button
-                type="button"
-                onClick={() => setShowCreateModal(true)}
-                className="mt-6"
-            >
-                Add New Custom Field
-            </Button>
-
+            <div className="flex justify-end mb-8">
+                <Button
+                    type="button"
+                    onClick={() => setShowCreateModal(true)}
+                    className="mt-6 "
+                >
+                    <span>
+                        <Plus />
+                    </span>{" "}
+                    Custom Field
+                </Button>
+            </div>
             <CreateBasicCustomFieldModal
                 openModal={showCreateModal}
                 setOpenModal={setShowCreateModal}
@@ -195,6 +199,7 @@ const BasicCustomFieldSectionForm = ({ resume }: Props) => {
                 actionText="Delete"
                 onConfirm={confirmDelete}
             />
+            <hr />
         </div>
     );
 };

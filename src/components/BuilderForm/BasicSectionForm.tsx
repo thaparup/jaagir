@@ -9,7 +9,7 @@ const BassicSectionForm = ({ }: Props) => {
     const { register } = useFormContext();
 
     return (
-        <div className="px-8">
+        <div className="px-8 mt-4">
             <div className="flex gap-4 items-center">
                 <User size={20} />
                 <h1 className="text-3xl font-semibold">Basics</h1>

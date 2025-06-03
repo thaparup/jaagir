@@ -18,7 +18,7 @@ import {
 } from "@/actions/Builder/language.action";
 import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
-import { List, Pencil, Trash } from "lucide-react";
+import { List, Pencil, Plus, Trash } from "lucide-react";
 
 import Alert from "../Alert";
 import CreateLanguageModal from "../Modals/Languages/CreateLanguageModal";
@@ -107,14 +107,14 @@ const LanguageSectionForm = ({ resume }: Props) => {
     };
 
     return (
-        <div className="px-8">
+        <div className="px-8 mt-8">
             <div className="flex gap-6 items-center mb-6">
                 <Notebook />
                 <h3 className="text-2xl font-medium text-white">Languages</h3>
             </div>
 
             <DndProvider onDragEnd={handleDragEnd} items={languages}>
-                <div className="flex flex-col gap-4 p-8 border-4 border-blue-700">
+                <div className="flex flex-col gap-4 px-6">
                     {languages.map((lang) => (
                         <SortableItem key={lang.id} uuid={lang.id}>
                             <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
@@ -156,9 +156,13 @@ const LanguageSectionForm = ({ resume }: Props) => {
                 </div>
             </DndProvider>
 
-            <Button type="button" onClick={() => setShowCreateModal(true)} className="mt-6">
-                Add New Language
-            </Button>
+
+            <div className="flex justify-end mb-8 mr-6">
+                <Button type="button" onClick={() => setShowCreateModal(true)} className="mt-6">
+                    <span><Plus /></span>Language
+                </Button>
+
+            </div>
             <CreateLanguageModal
                 openModal={showCreateModal}
                 setOpenModal={setShowCreateModal}
@@ -183,6 +187,7 @@ const LanguageSectionForm = ({ resume }: Props) => {
                 actionText="Delete"
                 onConfirm={confirmDelete}
             />
+            <hr />
         </div>
     );
 };

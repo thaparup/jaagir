@@ -7,14 +7,14 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InterestSchema, InterestSchemaType } from "@/schema/builder.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Plus } from "phosphor-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid";
 import { createInterest } from "@/actions/Builder/interest.action";
 

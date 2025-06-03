@@ -6,10 +6,10 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
     GithubLogo,
     LinkedinLogo,
@@ -23,9 +23,10 @@ import {
 import { ProfileSchema, ProfileType } from "@/schema/builder.schema";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProfile } from "@/actions/Builder/builder.action";
+
 import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
+import { createProfile } from "@/actions/Builder/profile.action";
 type Props = {
     openModal: boolean;
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;

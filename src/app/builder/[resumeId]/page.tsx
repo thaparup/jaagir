@@ -126,19 +126,18 @@ const Page = () => {
         );
     }
     return (
-        <div className="bg-black text-white flex gap-8">
+        <div className="bg-black text-white flex gap-8 w-full">
             {isSaving && (
                 <div className="fixed top-4 right-4 bg-blue-500 text-white py-1 px-3 rounded-md">
                     Saving changes...
                 </div>
             )}
 
-            <div className="space-y-6 pb-10 w-[40%]">
+            <div className="space-y-6 pb-10 w-[40%] ">
 
                 <FormProvider {...methods}>
-                    <form className="" onChange={handleFormChange}>
+                    <form className="w-full" onChange={handleFormChange}>
                         <BassicSectionForm />
-                        {/* <SummarySectionForm /> */}
                     </form>
                 </FormProvider>
 
@@ -148,12 +147,12 @@ const Page = () => {
 
 
 
-            {/* <div className="flex flex-col gap-8 w-full">
+            <div className="flex flex-col gap-8 w-[60%]">
                 <CVDrawer />
                 {currentLiveResumeData && (
                     <ResumePreview resume={{ data: currentLiveResumeData } as ResumeResponseSchemaType} />
                 )}
-            </div> */}
+            </div>
         </div >
     );
 };

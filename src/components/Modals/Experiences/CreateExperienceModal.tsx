@@ -7,7 +7,7 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     ExperienceSchema,
@@ -17,8 +17,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Plus } from "phosphor-react";
-import { Button } from "../ui/button";
-import RichTextEditor from "../RichTextEditor";
+import { Button } from "@/components/ui/button";
+import RichTextEditor from "../../RichTextEditor";
 import { createExperience } from "@/actions/Builder/experience.action";
 import { v4 as uuidv4 } from "uuid";
 

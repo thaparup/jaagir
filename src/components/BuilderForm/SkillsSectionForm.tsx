@@ -1,30 +1,22 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Notebook } from "phosphor-react";
 import { Button } from "../ui/button";
 import {
-    ExperienceSchemaType,
     ResumeSchemaType,
     SkillSchemaType,
 } from "@/schema/builder.schema";
-import CreateExperienceModal from "../Modals/CreateExperienceModal";
 import DndProvider from "../DndProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { toast } from "sonner";
-import {
-    deleteExperience,
-    reorderResumeExperiences,
-} from "@/actions/Builder/experience.action";
 import { SortableItem } from "../SortableItem";
 import Menu from "../Menu";
-import { DraftingCompass, List, Pencil, Trash } from "lucide-react";
-import EditExperienceModal from "../Modals/EditExperienceModal";
+import { DraftingCompass, List, Pencil, Plus, Trash } from "lucide-react";
 import Alert from "../Alert";
-import CreateSkillModal from "../Modals/CreateSkillModal";
 import { deleteSkill, reorderResumeSkills } from "@/actions/Builder/skill.action";
-import EditSkillModal from "../Modals/EditSkillModal";
+import CreateSkillModal from "../Modals/Skills/CreateSkillModal";
+import EditSkillModal from "../Modals/Skills/EditSkillModal";
 
 type Props = {
     resume: ResumeSchemaType;
@@ -111,7 +103,7 @@ const SkillsSectionForm = ({ resume }: Props) => {
         deleteMutation.mutate(filteredSkills);
     };
     return (
-        <div className="px-8">
+        <div className="px-8 ">
             <div className="flex gap-6 items-center mb-6">
                 <DraftingCompass />
                 <h3 className="text-2xl font-medium text-white">Skills</h3>
@@ -119,7 +111,7 @@ const SkillsSectionForm = ({ resume }: Props) => {
 
 
             <DndProvider onDragEnd={handleDragEnd} items={skills}>
-                <div className="flex flex-col gap-4 p-8 border-4 border-red-700">
+                <div className="flex flex-col gap-4 px-6">
                     {skills.map((skill) => (
                         <SortableItem key={skill.id} uuid={skill.id}>
                             <div className="flex items-center justify-between w-full hover:bg-gray-700/60">
@@ -162,13 +154,16 @@ const SkillsSectionForm = ({ resume }: Props) => {
             </DndProvider>
 
 
-            <Button
-                type="button"
-                onClick={() => setShowCreateModal(true)}
-                className="mt-6 "
-            >
-                Add New Skills
-            </Button>
+
+            <div className="flex justify-end mb-8 mr-6">
+                <Button
+                    type="button"
+                    onClick={() => setShowCreateModal(true)}
+                    className="mt-6 "
+                >
+                    <span><Plus size={24} /></span> Skills
+                </Button>
+            </div>
 
             <CreateSkillModal
                 openModal={showCreateModal}
@@ -194,6 +189,7 @@ const SkillsSectionForm = ({ resume }: Props) => {
                 actionText="Delete"
                 onConfirm={confirmDelete}
             />
+            <hr />
         </div>
     );
 };
