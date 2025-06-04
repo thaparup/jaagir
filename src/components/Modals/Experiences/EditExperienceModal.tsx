@@ -125,7 +125,7 @@ const EditExperienceModal = ({
                     <DialogTitle>
                         <div className="flex gap-4 items-center">
                             <Plus className="text-primary" />
-                            <span>Add a new experience</span>
+                            <span>Edit experience</span>
                         </div>
                     </DialogTitle>
                     <DialogDescription className="text-gray-300">

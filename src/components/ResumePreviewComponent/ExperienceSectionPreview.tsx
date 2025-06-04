@@ -1,35 +1,66 @@
-"use client";
 
-import { ResumeSchemaType } from "@/schema/builder.schema";
-import useResumeGlobalStyle from "@/store/zustand/resumeGlobalStyleStore";
-import React from "react";
+
+'use client'
+
+import { ResumeSchemaType } from '@/schema/builder.schema'
+import useResumeStore from '@/store/zustand/resumeGlobalStyleStore'
+import { Link } from 'lucide-react'
+import React, { useState } from 'react'
 
 type Props = {
-  resume: ResumeSchemaType;
-};
+  resume: ResumeSchemaType
+}
 
-const SummarySectionPreview = ({ resume }: Props) => {
-  const { fontSize, lineHeight, textColor } = useResumeGlobalStyle();
+type HoveredItem = {
+  id: string,
+  url: string
+}
 
-  if (!resume?.summary) {
-    return null;
-  }
+const ExperienceSectionPreview = ({ resume }: Props) => {
+  const { fontSize, textColor, primaryColor, lineHeight } = useResumeStore()
+  const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
 
   return (
-    <div className="mt-4">
-      <h2 style={{ fontSize, color: textColor }}>Summary</h2>
+    <div>
+      <h2 style={{ fontSize, color: textColor }}>Experience</h2>
       <hr className="border-0 h-[1px] bg-gray-600" />
+      <div className='flex flex-col gap-6 mt-2'>
+        {resume.experiences?.map((exp) => (
+          <div key={exp.id} className="space-y-1">
+            <div className='flex justify-between items-center'>
+              <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{exp.company}</span>
+              <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{exp.date}</span>
+            </div>
+            <div className='flex justify-between'>
+              <span style={{ fontSize, fontWeight: 400, lineHeight }}>{exp.position}</span>
+              <span style={{ fontSize, fontWeight: 400, lineHeight }}>{exp.location}</span>
+            </div>
 
-      <div
-        className="prose max-w-none"
-        style={{
-          fontSize,
-          color: textColor,
-          lineHeight,
-          margin: "8px 0",
-        }}
-        dangerouslySetInnerHTML={{ __html: resume.summary }}
-      />
+            {exp.website && (
+              <div className='relative flex gap-1'
+                onMouseEnter={() => setHoveredItem({ id: exp.id, url: exp.website! })}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <Link size={14} color={primaryColor} />
+                <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{exp.website}</span>
+                {hoveredItem?.id === exp.id && (
+                  <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
+                    {exp.website}
+                  </span>
+                )}
+              </div>
+            )}
+
+            {exp.summary && (
+              <div
+                className="prose max-w-none mt-2"
+                style={{ fontSize, color: textColor, lineHeight }}
+                dangerouslySetInnerHTML={{ __html: exp.summary }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
 
       <style jsx>{`
         .prose * {
@@ -129,7 +160,7 @@ const SummarySectionPreview = ({ resume }: Props) => {
         }
       `}</style>
     </div>
-  );
-};
+  )
+}
 
-export default SummarySectionPreview;
+export default ExperienceSectionPreview

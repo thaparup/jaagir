@@ -133,7 +133,7 @@ const Page = () => {
                 </div>
             )}
 
-            <div className="space-y-6 pb-10 w-[40%] ">
+            <div className="space-y-6 pb-10 w-[40%] max-h-screen overflow-y-scroll ">
 
                 <FormProvider {...methods}>
                     <form className="w-full" onChange={handleFormChange}>

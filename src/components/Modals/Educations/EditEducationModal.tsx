@@ -115,7 +115,7 @@ const EditEducationModal = ({
                     <DialogTitle>
                         <div className="flex gap-4 items-center">
                             <Plus className="text-primary" />
-                            <span>Add a new Education</span>
+                            <span>Edit Education</span>
                         </div>
                     </DialogTitle>
                 </DialogHeader>

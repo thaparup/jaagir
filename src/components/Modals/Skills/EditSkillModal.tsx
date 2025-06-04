@@ -111,7 +111,7 @@ const EditSkillModal = ({ resumeId, openModal, setOpenModal, activeSkillId, skil
                     <DialogTitle>
                         <div className="flex gap-4 items-center">
                             <Plus className="text-primary" />
-                            <span>Add a new skill</span>
+                            <span>Edit skill</span>
                         </div>
                     </DialogTitle>
                     <DialogDescription className="text-gray-300">

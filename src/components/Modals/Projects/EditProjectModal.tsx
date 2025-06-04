@@ -114,7 +114,7 @@ const EditProjectModal = ({
                     <DialogTitle>
                         <div className="flex gap-4 items-center">
                             <Plus className="text-primary" />
-                            <span>Add a new project</span>
+                            <span>Edit project</span>
                         </div>
                     </DialogTitle>
                     <DialogDescription className="text-gray-300">

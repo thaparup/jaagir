@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -96,14 +96,20 @@ const CreateProfileModal = ({ openModal, setOpenModal, resumeId }: Props) => {
     } = useForm<ProfileType>({
         resolver: zodResolver(ProfileSchema),
         defaultValues: {
-            network: "",
+            network: selectedPlatform.name,
             username: "",
             url: "",
-            icon: "",
-            id: "",
+            icon: selectedPlatform.icon,
+            id: uuidv4(),
         },
     });
 
+
+    useEffect(() => {
+        setValue("icon", selectedPlatform.icon);
+        setValue("network", selectedPlatform.name);
+        setValue("id", uuidv4());
+    }, [])
     const createProfilesMutation = useMutation({
         mutationFn: async (data: ProfileType) => {
             return await createProfile(resumeId, data);
@@ -125,7 +131,6 @@ const CreateProfileModal = ({ openModal, setOpenModal, resumeId }: Props) => {
     });
 
     const onSubmit = (data: ProfileType) => {
-        console.log("Form data of create profile modal:", data);
         createProfilesMutation.mutate(data);
         reset();
         setOpenModal(false);

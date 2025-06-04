@@ -178,11 +178,7 @@ const EditProfileModal = ({
                     <DialogTitle>
                         <div className="flex gap-4 items-center">
                             <Plus className="text-primary" />
-                            <span>
-                                {activeProfileIndex !== null
-                                    ? "Edit Social Profile"
-                                    : "Add Social Profile"}
-                            </span>
+                            <span>Edit Profile </span>
                         </div>
                     </DialogTitle>
 
@@ -204,8 +200,8 @@ const EditProfileModal = ({
                                             type="button"
                                             onClick={() => handlePlatformSelect(platform)}
                                             className={`p-3 rounded-lg border-2 transition-all duration-200 flex flex-col items-center gap-1 ${selectedPlatform.name === platform.name
-                                                ? "border-primary bg-primary/10 text-primary"
-                                                : "border-gray-600 hover:border-gray-500 text-gray-400 hover:text-gray-300"
+                                                    ? "border-primary bg-primary/10 text-primary"
+                                                    : "border-gray-600 hover:border-gray-500 text-gray-400 hover:text-gray-300"
                                                 }`}
                                         >
                                             <IconComponent size={20} />
@@ -238,9 +234,7 @@ const EditProfileModal = ({
                                 {...register("username")}
                                 className="bg-gray-800 border border-gray-600 outline-none focus:border-primary rounded-lg placeholder:text-gray-500 p-3 w-full text-white"
                                 placeholder={
-                                    selectedPlatform.name === "Gmail"
-                                        ? "your.email"
-                                        : "username"
+                                    selectedPlatform.name === "Gmail" ? "your.email" : "username"
                                 }
                             />
                             {typeof errors.username?.message === "string" && (
@@ -282,7 +276,6 @@ const EditProfileModal = ({
                             )}
                         </Button>
                     </form>
-
                 </DialogHeader>
             </DialogContent>
         </Dialog>
