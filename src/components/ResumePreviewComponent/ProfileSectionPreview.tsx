@@ -29,53 +29,58 @@ const ProfileSectionPreview = ({ resume }: Props) => {
     const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null);
 
     return (
-        <div className="mt-4">
-            <h2 style={{ fontSize, color: textColor }}>Profiles</h2>
-            <hr className="border-0 h-[1px] bg-gray-600" />
+        <>
+            {resume.profiles && resume.profiles?.length > 0 ? (
+                <div className="mt-4">
 
-            <div className="flex gap-8 pt-2 pb-4">
-                {resume.profiles?.map((profile, index) => {
-                    const IconComponent = iconMap[profile.icon as keyof typeof iconMap];
+                    <h2 style={{ fontSize, color: textColor, fontWeight: 600 }}>Profiles</h2>
+                    <div className="w-full h-[1px] bg-black -translate-y-1" />
 
-                    return (
-                        <div
-                            key={index}
-                            className="relative flex items-center gap-1 mb-1"
-                            onMouseEnter={() => {
-                                if (profile.url) {
-                                    setHoveredItem({ id: profile.url, url: profile.url });
-                                }
-                            }}
-                            onMouseLeave={() => {
-                                setHoveredItem(null);
-                            }}
-                        >
-                            {IconComponent && (
-                                <IconComponent size={20} color={primaryColor} />
-                            )}
+                    <div className="flex gap-8 pt-0 pb-0">
+                        {resume.profiles?.map((profile, index) => {
+                            const IconComponent = iconMap[profile.icon as keyof typeof iconMap];
 
-                            <span
-                                className="cursor-pointer underline"
-                                style={{
-                                    fontSize,
-                                    color: textColor,
-                                    lineHeight
-                                }}
-                            >
-                                {profile.username}
-                            </span>
+                            return (
+                                <div
+                                    key={index}
+                                    className="relative flex items-center gap- mb-1"
+                                    onMouseEnter={() => {
+                                        if (profile.url) {
+                                            setHoveredItem({ id: profile.url, url: profile.url });
+                                        }
+                                    }}
+                                    onMouseLeave={() => {
+                                        setHoveredItem(null);
+                                    }}
+                                >
+                                    {IconComponent && (
+                                        <IconComponent size={20} color={primaryColor} />
+                                    )}
 
-                            {hoveredItem?.id === profile.url &&
-                                hoveredItem!.url === profile.url && (
-                                    <span className="absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-2 rounded-md z-10 whitespace-nowrap">
-                                        {profile.url}
+                                    <span
+                                        className="cursor-pointer underline"
+                                        style={{
+                                            fontSize,
+                                            color: textColor,
+                                            lineHeight
+                                        }}
+                                    >
+                                        {profile.username}
                                     </span>
-                                )}
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
+
+                                    {hoveredItem?.id === profile.url &&
+                                        hoveredItem!.url === profile.url && (
+                                            <span className="absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-2 rounded-md z-10 whitespace-nowrap">
+                                                {profile.url}
+                                            </span>
+                                        )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            ) : null}
+        </>
     );
 };
 

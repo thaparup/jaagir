@@ -211,7 +211,7 @@ const EditEducationModal = ({
                         className="mt-2 bg-primary hover:bg-primary/90 text-white cursor-pointer"
                         disabled={isPending}
                     >
-                        {isPending ? "Adding..." : "Add Experience"}
+                        {isPending ? "Saving..." : "Saving"}
                     </Button>
                 </form>
             </DialogContent>

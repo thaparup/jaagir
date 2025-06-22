@@ -18,6 +18,7 @@ import PrimaryColorInput from "./PrimaryColorInput";
 import BgColorInput from "./BgColorInput";
 import TextColorInput from "./TextColorInput";
 import useColorInputStore from "@/store/zustand/colorInputStore";
+import { Menu } from "lucide-react";
 
 type Props = {};
 
@@ -33,7 +34,11 @@ const CVDrawer = (props: Props) => {
                 });
             }}
         >
-            <DrawerTrigger>Open</DrawerTrigger>
+            <DrawerTrigger className="bg-primary px-2 p-2 rounded-md cursor-pointer">
+
+                <Menu />
+
+            </DrawerTrigger>
             <DrawerContent className="h-screen overflow-y-auto">
                 <FontSizeSlider />
                 <LineHeightSlider />

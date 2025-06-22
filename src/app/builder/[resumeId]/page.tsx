@@ -1,6 +1,11 @@
 
+
+
 "use client";
-import { fetchResumeById, updateResume } from "@/actions/Builder/builder.action";
+import {
+    fetchResumeById,
+    updateResume,
+} from "@/actions/Builder/builder.action";
 import {
     ResumeResponseSchemaType,
     ResumeSchemaType,
@@ -16,10 +21,14 @@ import { useFormStore } from "@/app/formStore";
 import ResumePreview from "@/components/ResumePreview";
 import CVDrawer from "@/components/CVDrawer/CVDrawer";
 import SummarySectionForm from "@/components/BuilderForm/SummarySectionForm";
-import watch from 'react-hook-form'
+import watch from "react-hook-form";
 import OtherRemainingSections from "@/components/BuilderForm/OtherRemainingSections";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { Button } from "@/components/ui/button";
+
 const Page = () => {
-    const [openModalProfile, setOpenModalProfile] = useState(false)
+    const [openModalProfile, setOpenModalProfile] = useState(false);
     const params = useParams() as { resumeId: string };
     const resumeId = params.resumeId;
     const queryClient = useQueryClient();
@@ -83,7 +92,6 @@ const Page = () => {
 
         const currentFormValues = getValues();
 
-
         setCurrentLiveResumeData(currentFormValues);
 
         const isThereDifferenceBetweenTheOriginalDataAndTheCurrentFormValues =
@@ -100,8 +108,6 @@ const Page = () => {
     useEffect(() => {
         builderHandleFormChange(handleFormChange);
     }, [handleFormChange, builderHandleFormChange]);
-
-
 
     useEffect(() => {
         if (fetchedResumeData?.data) {
@@ -125,40 +131,42 @@ const Page = () => {
             </div>
         );
     }
+
     return (
-        <div className="bg-black text-white flex gap-8 w-full">
+        <div className="bg-black text-white flex h-screen overflow-hidden">
             {isSaving && (
-                <div className="fixed top-4 right-4 bg-blue-500 text-white py-1 px-3 rounded-md">
+                <div className="fixed top-4 right-4 bg-blue-500 text-white py-1 px-3 rounded-md z-50">
                     Saving changes...
                 </div>
             )}
 
-            <div className="space-y-6 pb-10 w-[40%] max-h-screen overflow-y-scroll ">
+            <div className="w-[40%] h-full flex flex-col">
+                <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                    <CVDrawer />
 
-                <FormProvider {...methods}>
-                    <form className="w-full" onChange={handleFormChange}>
-                        <BassicSectionForm />
-                    </form>
-                </FormProvider>
+                    <FormProvider {...methods}>
+                        <form className="w-full" onChange={handleFormChange}>
+                            <BassicSectionForm />
+                        </form>
+                    </FormProvider>
 
-                <OtherRemainingSections resume={fetchedResumeData!} />
+                    <OtherRemainingSections resume={fetchedResumeData!} />
+                </div>
             </div>
 
+            <div className="w-[60%] h-full overflow-y-auto">
+                <div className="p-4">
+                    {/* <CVDrawer /> */}
 
-
-
-            <div className="flex flex-col gap-8 w-[60%]">
-                <CVDrawer />
-                {currentLiveResumeData && (
-                    <ResumePreview resume={{ data: currentLiveResumeData } as ResumeResponseSchemaType} />
-                )}
+                    {currentLiveResumeData && (
+                        <ResumePreview
+                            resume={{ data: currentLiveResumeData } as ResumeResponseSchemaType}
+                        />
+                    )}
+                </div>
             </div>
-        </div >
+        </div>
     );
 };
 
 export default Page;
-
-
-
-

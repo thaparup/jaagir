@@ -23,7 +23,7 @@ model Resume {
   email            String?
   website          String?
   summary          String?
-  phoneNumber      Int?
+  phoneNumber      String?
   location         String?
   basicCustomField Json?
   profiles         Json?

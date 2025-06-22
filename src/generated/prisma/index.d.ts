@@ -875,18 +875,8 @@ export namespace Prisma {
 
   export type AggregateResume = {
     _count: ResumeCountAggregateOutputType | null
-    _avg: ResumeAvgAggregateOutputType | null
-    _sum: ResumeSumAggregateOutputType | null
     _min: ResumeMinAggregateOutputType | null
     _max: ResumeMaxAggregateOutputType | null
-  }
-
-  export type ResumeAvgAggregateOutputType = {
-    phoneNumber: number | null
-  }
-
-  export type ResumeSumAggregateOutputType = {
-    phoneNumber: number | null
   }
 
   export type ResumeMinAggregateOutputType = {
@@ -898,7 +888,7 @@ export namespace Prisma {
     email: string | null
     website: string | null
     summary: string | null
-    phoneNumber: number | null
+    phoneNumber: string | null
     location: string | null
     updatedAt: Date | null
   }
@@ -912,7 +902,7 @@ export namespace Prisma {
     email: string | null
     website: string | null
     summary: string | null
-    phoneNumber: number | null
+    phoneNumber: string | null
     location: string | null
     updatedAt: Date | null
   }
@@ -942,14 +932,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type ResumeAvgAggregateInputType = {
-    phoneNumber?: true
-  }
-
-  export type ResumeSumAggregateInputType = {
-    phoneNumber?: true
-  }
 
   export type ResumeMinAggregateInputType = {
     id?: true
@@ -1042,18 +1024,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: ResumeAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ResumeSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: ResumeMinAggregateInputType
@@ -1084,8 +1054,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ResumeCountAggregateInputType | true
-    _avg?: ResumeAvgAggregateInputType
-    _sum?: ResumeSumAggregateInputType
     _min?: ResumeMinAggregateInputType
     _max?: ResumeMaxAggregateInputType
   }
@@ -1099,7 +1067,7 @@ export namespace Prisma {
     email: string | null
     website: string | null
     summary: string | null
-    phoneNumber: number | null
+    phoneNumber: string | null
     location: string | null
     basicCustomField: JsonValue | null
     profiles: JsonValue | null
@@ -1113,8 +1081,6 @@ export namespace Prisma {
     interest: JsonValue | null
     updatedAt: Date
     _count: ResumeCountAggregateOutputType | null
-    _avg: ResumeAvgAggregateOutputType | null
-    _sum: ResumeSumAggregateOutputType | null
     _min: ResumeMinAggregateOutputType | null
     _max: ResumeMaxAggregateOutputType | null
   }
@@ -1243,7 +1209,7 @@ export namespace Prisma {
       email: string | null
       website: string | null
       summary: string | null
-      phoneNumber: number | null
+      phoneNumber: string | null
       location: string | null
       basicCustomField: Prisma.JsonValue | null
       profiles: Prisma.JsonValue | null
@@ -1687,7 +1653,7 @@ export namespace Prisma {
     readonly email: FieldRef<"Resume", 'String'>
     readonly website: FieldRef<"Resume", 'String'>
     readonly summary: FieldRef<"Resume", 'String'>
-    readonly phoneNumber: FieldRef<"Resume", 'Int'>
+    readonly phoneNumber: FieldRef<"Resume", 'String'>
     readonly location: FieldRef<"Resume", 'String'>
     readonly basicCustomField: FieldRef<"Resume", 'Json'>
     readonly profiles: FieldRef<"Resume", 'Json'>
@@ -2168,20 +2134,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -2210,16 +2162,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Int'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
   /**
-   * Reference to a field of type 'Float[]'
+   * Reference to a field of type 'Int[]'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
   /**
    * Deep Input Types
@@ -2238,7 +2190,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"Resume"> | string | null
     website?: StringNullableFilter<"Resume"> | string | null
     summary?: StringNullableFilter<"Resume"> | string | null
-    phoneNumber?: IntNullableFilter<"Resume"> | number | null
+    phoneNumber?: StringNullableFilter<"Resume"> | string | null
     location?: StringNullableFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableFilter<"Resume">
     profiles?: JsonNullableFilter<"Resume">
@@ -2289,7 +2241,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"Resume"> | string | null
     website?: StringNullableFilter<"Resume"> | string | null
     summary?: StringNullableFilter<"Resume"> | string | null
-    phoneNumber?: IntNullableFilter<"Resume"> | number | null
+    phoneNumber?: StringNullableFilter<"Resume"> | string | null
     location?: StringNullableFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableFilter<"Resume">
     profiles?: JsonNullableFilter<"Resume">
@@ -2327,10 +2279,8 @@ export namespace Prisma {
     interest?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: ResumeCountOrderByAggregateInput
-    _avg?: ResumeAvgOrderByAggregateInput
     _max?: ResumeMaxOrderByAggregateInput
     _min?: ResumeMinOrderByAggregateInput
-    _sum?: ResumeSumOrderByAggregateInput
   }
 
   export type ResumeScalarWhereWithAggregatesInput = {
@@ -2345,7 +2295,7 @@ export namespace Prisma {
     email?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     website?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     summary?: StringNullableWithAggregatesFilter<"Resume"> | string | null
-    phoneNumber?: IntNullableWithAggregatesFilter<"Resume"> | number | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     location?: StringNullableWithAggregatesFilter<"Resume"> | string | null
     basicCustomField?: JsonNullableWithAggregatesFilter<"Resume">
     profiles?: JsonNullableWithAggregatesFilter<"Resume">
@@ -2369,7 +2319,7 @@ export namespace Prisma {
     email?: string | null
     website?: string | null
     summary?: string | null
-    phoneNumber?: number | null
+    phoneNumber?: string | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2393,7 +2343,7 @@ export namespace Prisma {
     email?: string | null
     website?: string | null
     summary?: string | null
-    phoneNumber?: number | null
+    phoneNumber?: string | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2417,7 +2367,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2441,7 +2391,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2465,7 +2415,7 @@ export namespace Prisma {
     email?: string | null
     website?: string | null
     summary?: string | null
-    phoneNumber?: number | null
+    phoneNumber?: string | null
     location?: string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2489,7 +2439,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2513,7 +2463,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     basicCustomField?: NullableJsonNullValueInput | InputJsonValue
     profiles?: NullableJsonNullValueInput | InputJsonValue
@@ -2556,17 +2506,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -2632,10 +2571,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type ResumeAvgOrderByAggregateInput = {
-    phoneNumber?: SortOrder
-  }
-
   export type ResumeMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -2662,10 +2597,6 @@ export namespace Prisma {
     phoneNumber?: SortOrder
     location?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type ResumeSumOrderByAggregateInput = {
-    phoneNumber?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2702,22 +2633,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -2768,14 +2683,6 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -2806,17 +2713,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -2875,7 +2771,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -2883,23 +2779,7 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<

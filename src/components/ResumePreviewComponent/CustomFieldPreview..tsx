@@ -92,7 +92,7 @@ export default function CustomFieldPreview({ fields }: Props) {
 
                 return (
                     <div key={index} className="flex items-center gap-1 ">
-                        <div className="flex gap-2 items-center ">
+                        <div className="flex gap-1 items-center ">
                             <span style={{ color: primaryColor }}>
                                 <Icon size={fontSize + 2} />
                             </span>

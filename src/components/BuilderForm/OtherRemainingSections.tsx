@@ -24,6 +24,7 @@ const OtherRemainingSections = ({ resume }: Props) => {
             <BasicCustomFieldSectionForm resume={resume?.data!} />
             <SummarySectionForm resume={resume?.data!} />
             <ProfileSectionForm resume={resume} />
+            <EducationSectionForm resume={resume?.data!} />
             <ExperienceSectionForm resume={resume?.data!} />
             <SkillsSectionForm resume={resume?.data!} />
             <LanguageSectionForm resume={resume?.data!} />

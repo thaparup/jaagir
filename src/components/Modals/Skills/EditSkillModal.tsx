@@ -165,7 +165,7 @@ const EditSkillModal = ({ resumeId, openModal, setOpenModal, activeSkillId, skil
                         className="mt-2 bg-primary hover:bg-primary/90 text-white cursor-pointer"
                         disabled={isPending}
                     >
-                        {isPending ? "Adding..." : "Add Skill"}
+                        {isPending ? "Saving..." : "Save"}
                     </Button>
                 </form>
             </DialogContent>

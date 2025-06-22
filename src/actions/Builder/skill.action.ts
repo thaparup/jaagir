@@ -26,10 +26,10 @@ export const createSkill = async (resumeId: string, data: SkillSchemaType) => {
       },
     ];
 
-    const updatedResume = await prisma.resume.update({
+    await prisma.resume.update({
       where: { id: resumeId },
       data: {
-        experiences: updatedSkills,
+        skills: updatedSkills,
       },
     });
 

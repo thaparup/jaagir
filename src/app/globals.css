@@ -162,3 +162,10 @@ h3 {
   max-height: 300px;
   overflow-y: scroll;
 } */
+.exporting .export-hidden {
+  display: none !important;
+}
+/* In your global CSS or a style block */
+.pdf-export-mode .prose {
+  line-height: 1.2 !important; /* Experiment with this value */
+}

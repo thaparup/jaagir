@@ -21,47 +21,49 @@ const ProjectSectionPreview = ({ resume }: Props) => {
     const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
 
     return (
-        <div>
-            <h2 style={{ fontSize, color: textColor }}>Projects</h2>
-            <hr className="border-0 h-[1px] bg-gray-600" />
-            <div className='flex flex-col gap-6 mt-2'>
-                {resume.projects?.map((project) => (
-                    <div key={project.id} className="space-y-1">
-                        <div className='flex justify-between items-center'>
-                            <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{project.name}</span>
-                            <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{project.date}</span>
-                        </div>
-                        <span style={{ fontSize, fontWeight: 400, lineHeight }}>{project.description}</span>
+        <>
+            {resume.projects!.length > 0 ? (
+                <div className='mt-2'>
+                    <h2 style={{ fontSize, color: textColor, fontWeight: 600 }}>Project</h2>
+                    <div className="w-full h-[1px] bg-black -translate-y-1" />
+                    <div className='flex flex-col gap-6 mt-2'>
+                        {resume.projects?.map((project) => (
+                            <div key={project.id} className="space-y-1">
+                                <div className='flex justify-between items-center'>
+                                    <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{project.name}</span>
+                                    <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{project.date}</span>
+                                </div>
+                                <span style={{ fontSize, fontWeight: 400, lineHeight }}>{project.description}</span>
 
 
-                        {project.website && (
-                            <div className='relative flex gap-1'
-                                onMouseEnter={() => setHoveredItem({ id: project.id, url: project.website! })}
-                                onMouseLeave={() => setHoveredItem(null)}
-                            >
-                                <Link size={14} color={primaryColor} />
-                                <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{project.website}</span>
-                                {hoveredItem?.id === project.id && (
-                                    <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
-                                        {project.website}
-                                    </span>
+                                {project.website && (
+                                    <div className='relative flex gap-1'
+                                        onMouseEnter={() => setHoveredItem({ id: project.id, url: project.website! })}
+                                        onMouseLeave={() => setHoveredItem(null)}
+                                    >
+                                        <Link size={14} color={primaryColor} />
+                                        <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{project.website}</span>
+                                        {hoveredItem?.id === project.id && (
+                                            <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
+                                                {project.website}
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
+
+                                {project.summary && (
+                                    <div
+                                        className="prose max-w-none mb-2"
+                                        style={{ fontSize, color: textColor, lineHeight }}
+                                        dangerouslySetInnerHTML={{ __html: project.summary }}
+                                    />
                                 )}
                             </div>
-                        )}
-
-                        {project.summary && (
-                            <div
-                                className="prose max-w-none mb-2"
-                                style={{ fontSize, color: textColor, lineHeight }}
-                                dangerouslySetInnerHTML={{ __html: project.summary }}
-                            />
-                        )}
+                        ))}
+                        {/* <br /> */}
                     </div>
-                ))}
-                {/* <br /> */}
-            </div>
 
-            <style jsx>{`
+                    <style jsx>{`
                 .prose h1 {
                     font-size: 2em;
                     margin-bottom: 0.5em;
@@ -129,7 +131,9 @@ const ProjectSectionPreview = ({ resume }: Props) => {
                     text-align: left;
                 }
             `}</style>
-        </div>
+                </div>
+            ) : null}
+        </>
     )
 }
 

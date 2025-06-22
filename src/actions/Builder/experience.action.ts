@@ -17,7 +17,7 @@ export const createExperience = async (
     if (!existingResume) {
       throw new Error("Resume not found");
     }
-
+    console.log(data);
     const currentExperiences: JsonArray = Array.isArray(
       existingResume.experiences
     )
@@ -37,7 +37,7 @@ export const createExperience = async (
       },
     ];
 
-    const updatedResume = await prisma.resume.update({
+    await prisma.resume.update({
       where: { id: resumeId },
       data: {
         experiences: updatedExperiences,

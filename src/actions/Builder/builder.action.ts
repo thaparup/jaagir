@@ -136,7 +136,7 @@ export const fetchResumeById = async (
   }
 };
 
-export const createResume = async (data: ResumeSchemaType) => {
+export const createResume = async (data: { title: string }) => {
   try {
     const newResume = await prisma.resume.create({
       data: {

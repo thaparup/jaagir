@@ -8,55 +8,57 @@ import { Link } from 'lucide-react'
 import React, { useState } from 'react'
 
 type Props = {
-    resume: ResumeSchemaType
+  resume: ResumeSchemaType
 }
 
 type HoveredItem = {
-    id: string,
-    url: string
+  id: string,
+  url: string
 }
 
 const ReferenceSectionPreview = ({ resume }: Props) => {
-    const { fontSize, textColor, primaryColor, lineHeight } = useResumeStore()
-    const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
+  const { fontSize, textColor, primaryColor, lineHeight } = useResumeStore()
+  const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
 
-    return (
-        <div>
-            <h2 style={{ fontSize, color: textColor }}>References</h2>
-            <hr className="border-0 h-[1px] bg-gray-600" />
-            <div className='flex flex-col gap-6 mt-2'>
-                {resume.references?.map((ref) => (
-                    <div key={ref.id} className="space-y-2">
-                        <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{ref.name}</span>
-                        <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{ref.description}</span>
+  return (
+    <>
+      {resume.references!.length > 0 ? (
+        <div className='mt-2'>
+          <h2 style={{ fontSize, color: textColor, fontWeight: 600 }}>References</h2>
+          <div className="w-full h-[1px] bg-black -translate-y-1" />
+          <div className='flex flex-col gap-6 mt-1'>
+            {resume.references?.map((ref) => (
+              <div key={ref.id} className="space-y-2">
+                <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{ref.name}</span>
+                <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{ref.description}</span>
 
 
-                        {ref.website && (
-                            <div className='relative flex gap-1'
-                                onMouseEnter={() => setHoveredItem({ id: ref.id, url: ref.website! })}
-                                onMouseLeave={() => setHoveredItem(null)}
-                            >
-                                <Link size={14} color={primaryColor} />
-                                <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{ref.website}</span>
-                                {hoveredItem?.id === ref.id && (
-                                    <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
-                                        {ref.website}
-                                    </span>
-                                )}
-                            </div>
-                        )}
+                {ref.website && (
+                  <div className='relative flex gap-1'
+                    onMouseEnter={() => setHoveredItem({ id: ref.id, url: ref.website! })}
+                    onMouseLeave={() => setHoveredItem(null)}
+                  >
+                    <Link size={14} color={primaryColor} />
+                    <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{ref.website}</span>
+                    {hoveredItem?.id === ref.id && (
+                      <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
+                        {ref.website}
+                      </span>
+                    )}
+                  </div>
+                )}
 
-                        {ref.summary && (
-                            <div
-                                className="prose max-w-none"
-                                style={{ fontSize, color: textColor, lineHeight }}
-                                dangerouslySetInnerHTML={{ __html: ref.summary }}
-                            />
-                        )}
-                    </div>
-                ))}
-            </div>
-            <style jsx>{`
+                {ref.summary && (
+                  <div
+                    className="prose max-w-none"
+                    style={{ fontSize, color: textColor, lineHeight }}
+                    dangerouslySetInnerHTML={{ __html: ref.summary }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          <style jsx>{`
         .prose * {
           margin: 0;
           padding: 0;
@@ -154,7 +156,9 @@ const ReferenceSectionPreview = ({ resume }: Props) => {
         }
       `}</style>
         </div>
-    )
+      ) : null}
+    </>
+  )
 }
 
 export default ReferenceSectionPreview

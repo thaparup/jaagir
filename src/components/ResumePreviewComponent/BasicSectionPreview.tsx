@@ -5,56 +5,57 @@ import { AtSign, Link, MapPinCheckInside, Phone } from "lucide-react";
 import { ResumeResponseSchemaType } from "@/schema/builder.schema";
 import { cn } from "@/lib/utils";
 import CustomFieldPreview from "./CustomFieldPreview.";
+import Separator from "../Separator";
 
 type Props = {
     resume: ResumeResponseSchemaType;
 };
 
 const BasicSectionPreview = ({ resume }: Props) => {
-    const { fontSize, primaryColor } = useResumeGlobalStyle();
+    const { fontSize, primaryColor, lineHeight } = useResumeGlobalStyle();
 
     const contactInfo = [];
 
     if (resume?.data?.location) {
         contactInfo.push(
-            <div key="location" className="flex items-center gap-2">
+            <div key="location" className="flex items-center gap-1">
                 <span style={{ color: primaryColor }}>
                     <MapPinCheckInside size={fontSize + 2} />
                 </span>
-                <span style={{ fontSize: fontSize }}>{resume.data.location}</span>
+                <span style={{ fontSize: fontSize, fontWeight: 'lighter', textDecoration: 'underline' }}>{resume.data.location}</span>
             </div>
         );
     }
 
     if (resume?.data?.phoneNumber) {
         contactInfo.push(
-            <div key="phoneNumber" className="flex items-center gap-2">
+            <div key="phoneNumber" className="flex items-center gap-1">
                 <span style={{ color: primaryColor }}>
                     <Phone size={fontSize + 2} />
                 </span>
-                <span style={{ fontSize: fontSize }}>{resume.data.phoneNumber}</span>
+                <span style={{ fontSize: fontSize, fontWeight: 'lighter', textDecoration: 'underline' }}>{resume.data.phoneNumber}</span>
             </div>
         );
     }
 
     if (resume?.data?.email) {
         contactInfo.push(
-            <div key="email" className="flex items-center gap-2">
+            <div key="email" className="flex items-center gap-1">
                 <span style={{ color: primaryColor }}>
                     <AtSign size={fontSize + 2} />
                 </span>
-                <span style={{ fontSize: fontSize }}>{resume.data.email}</span>
+                <span style={{ fontSize: fontSize, fontWeight: 'lighter', textDecoration: 'underline' }}>{resume.data.email}</span>
             </div>
         );
     }
 
     if (resume?.data?.website) {
         contactInfo.push(
-            <div key="website" className="flex items-center gap-2">
+            <div key="website" className="flex items-center gap-1">
                 <span style={{ color: primaryColor }}>
                     <Link size={fontSize + 2} />
                 </span>
-                <span style={{ fontSize: fontSize }}>{resume.data.website}</span>
+                <span style={{ fontSize: fontSize, fontWeight: 'lighter', textDecoration: 'underline' }}>{resume.data.website}</span>
             </div>
         );
     }
@@ -71,31 +72,35 @@ const BasicSectionPreview = ({ resume }: Props) => {
     }
 
     return (
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-4  ">
             <Avatar className={cn("rounded-none w-18 h-full")}>
-                <AvatarImage src="/me.jpg" />
+                <AvatarImage
+                    src={`https://res.cloudinary.com/du6xkfnmo/image/upload/v1750562391/me_dvhsdu.jpg`}
+                />
             </Avatar>
-            <div className="flex flex-col min-w-0 flex-1  ">
-                <p
-                    style={{
-                        fontSize: `${fontSize + 12}px`,
-                        fontWeight: "bold",
-                        lineHeight: "25px",
-                    }}
-                >
+            <Separator className="export-hidden" />
+
+            <div className="flex flex-col h-full">
+                <h3 style={{ lineHeight: '14px', fontWeight: 600, paddingTop: '4px' }}>
                     {resume?.data?.fullName}
-                </p>
-                <p
+                </h3>
+
+                <Separator className="export-hidden" />
+
+                <h6
                     style={{
-                        fontSize: `${fontSize + 2}px`,
-                        lineHeight: "25px",
+                        fontSize: `${fontSize}px`,
+                        lineHeight: '15px',
                         fontWeight: "lighter",
+
                     }}
                 >
                     {resume?.data?.headLine}
-                </p>
+                </h6>
+                <Separator className="export-hidden" />
 
-                <div className="flex flex-wrap items-center">
+
+                <div className="flex flex-wrap items-center -translate-y-1">
                     {contactInfo.map((item, index) => (
                         <React.Fragment key={index}>
                             {item}
@@ -107,7 +112,10 @@ const BasicSectionPreview = ({ resume }: Props) => {
                 </div>
             </div>
         </div>
+
+
     );
 };
 
 export default BasicSectionPreview;
+

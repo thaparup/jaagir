@@ -18,49 +18,52 @@ const EducationSectionPreview = ({ resume }: Props) => {
   const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
 
   return (
-    < div className="mt-4">
-      <h2 style={{ fontSize, color: textColor }}>Education</h2>
-      <hr className="border-0 h-[1px] bg-gray-600" />
-      <div className='flex flex-col gap-6 mt-2'>
-        {resume.education?.map((edu) => (
-          <div key={edu.id} className="space-y-1">
-            <div className='flex justify-between items-center'>
-              <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{edu.institution}</span>
-              <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{edu.date}</span>
-            </div>
-            <div className='flex justify-between'>
-              <span style={{ fontSize, fontWeight: 400, lineHeight }}>{edu.areaOfStudy}</span>
-              <span style={{ fontSize, fontWeight: 400, lineHeight }}>{edu.typesOfStudy}</span>
-            </div>
-            <span style={{ fontSize, fontWeight: 400, lineHeight }}>{edu.score}</span>
+    <>
+      {resume.education!.length > 0 ? (
+        < div className="mt-4">
 
-            {edu.website && (
-              <div className='relative flex gap-1'
-                onMouseEnter={() => setHoveredItem({ id: edu.id, url: edu.website! })}
-                onMouseLeave={() => setHoveredItem(null)}
-              >
-                <Link size={14} color={primaryColor} />
-                <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{edu.website}</span>
-                {hoveredItem?.id === edu.id && (
-                  <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
-                    {edu.website}
-                  </span>
+          <h2 style={{ fontSize, color: textColor, fontWeight: 600 }}>Education</h2>
+          <div className="w-full h-[1px] bg-black -translate-y-1" />
+          <div className='flex flex-col gap-6 mt-2'>
+            {resume.education?.map((edu) => (
+              <div key={edu.id} className="space-y-1">
+                <div className='flex justify-between items-center'>
+                  <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{edu.institution}</span>
+                  <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{edu.date}</span>
+                </div>
+                <div className='flex justify-between'>
+                  <span style={{ fontSize, fontWeight: 400, lineHeight }}>{edu.areaOfStudy}</span>
+                  <span style={{ fontSize, fontWeight: 400, lineHeight }}>{edu.typesOfStudy}</span>
+                </div>
+                <span style={{ fontSize, fontWeight: 400, lineHeight }}>{edu.score}</span>
+
+                {edu.website && (
+                  <div className='relative flex gap-1'
+                    onMouseEnter={() => setHoveredItem({ id: edu.id, url: edu.website! })}
+                    onMouseLeave={() => setHoveredItem(null)}
+                  >
+                    <Link size={14} color={primaryColor} />
+                    <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{edu.website}</span>
+                    {hoveredItem?.id === edu.id && (
+                      <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
+                        {edu.website}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {edu.summary && (
+                  <div
+                    className="prose max-w-none mt-2"
+                    style={{ fontSize, color: textColor, lineHeight }}
+                    dangerouslySetInnerHTML={{ __html: edu.summary }}
+                  />
                 )}
               </div>
-            )}
-
-            {edu.summary && (
-              <div
-                className="prose max-w-none mt-2"
-                style={{ fontSize, color: textColor, lineHeight }}
-                dangerouslySetInnerHTML={{ __html: edu.summary }}
-              />
-            )}
+            ))}
           </div>
-        ))}
-      </div>
 
-      <style jsx>{`
+          <style jsx>{`
         .prose * {
           margin: 0;
           padding: 0;
@@ -157,7 +160,9 @@ const EducationSectionPreview = ({ resume }: Props) => {
           text-align: left;
         }
       `}</style>
-    </div>
+        </div>
+      ) : null}
+    </>
   )
 }
 

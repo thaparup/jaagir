@@ -8,59 +8,60 @@ import { Link } from 'lucide-react'
 import React, { useState } from 'react'
 
 type Props = {
-    resume: ResumeSchemaType
+  resume: ResumeSchemaType
 }
 
 type HoveredItem = {
-    id: string,
-    url: string
+  id: string,
+  url: string
 }
 
 const AwardSectionPreview = ({ resume }: Props) => {
-    const { fontSize, textColor, primaryColor, lineHeight } = useResumeStore()
-    const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
+  const { fontSize, textColor, primaryColor, lineHeight } = useResumeStore()
+  const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null)
 
-    return (
-        <div>
-            <h2 style={{ fontSize, color: textColor }}>Awards</h2>
-            <hr className="border-0 h-[1px] bg-gray-600" />
-            <div className='flex flex-col gap-6 mt-2'>
-                {resume.awards?.map((award) => (
-                    <div key={award.id} className="space-y-1">
-                        <div className='flex justify-between items-center' >
-                            <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{award.title}</span>
-                            <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{award.date}</span>
-                        </div>
-                        <span style={{ fontSize, fontWeight: 400, lineHeight }}>{award.awarder}</span>
+  return (
+    <>
+      {resume.awards!.length > 0 ? (
+        <div className='mt-2'>
+          <h3 style={{ fontSize, color: textColor, fontWeight: 600 }}>Awards</h3>
+          <div className="w-full h-[1px] bg-black -translate-y-1" />
+          <div className='flex flex-col gap-6 mt-1'>
+            {resume.awards?.map((award) => (
+              <div key={award.id} className="space-y-1">
+                <div className='flex justify-between items-center' >
+                  <span style={{ fontSize: `${fontSize + 2}px`, fontWeight: 600, lineHeight }}>{award.title}</span>
+                  <span style={{ fontSize: `${fontSize + 1}px`, fontWeight: 600, lineHeight }}>{award.date}</span>
+                </div>
+                <span style={{ fontSize, fontWeight: 400, lineHeight }}>{award.awarder}</span>
 
 
-                        {award.website && (
-                            <div className='relative flex gap-1'
-                                onMouseEnter={() => setHoveredItem({ id: award.id, url: award.website! })}
-                                onMouseLeave={() => setHoveredItem(null)}
-                            >
-                                <Link size={14} color={primaryColor} />
-                                <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{award.website}</span>
-                                {hoveredItem?.id === award.id && (
-                                    <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
-                                        {award.website}
-                                    </span>
-                                )}
-                            </div>
-                        )}
+                {award.website && (
+                  <div className='relative flex gap-1'
+                    onMouseEnter={() => setHoveredItem({ id: award.id, url: award.website! })}
+                    onMouseLeave={() => setHoveredItem(null)}
+                  >
+                    <Link size={14} color={primaryColor} />
+                    <span style={{ fontSize, fontWeight: 300, textDecoration: 'underline', lineHeight }}>{award.website}</span>
+                    {hoveredItem?.id === award.id && (
+                      <span className='absolute top-6 left-12 bg-gray-500 text-xs text-white font-medium p-4 rounded-md z-10'>
+                        {award.website}
+                      </span>
+                    )}
+                  </div>
+                )}
 
-                        {award.summary && (
-                            <div
-                                className="prose max-w-none mt-2"
-                                style={{ fontSize, color: textColor, lineHeight }}
-                                dangerouslySetInnerHTML={{ __html: award.summary }}
-                            />
-                        )}
-                    </div>
-                ))}
-            </div>
-            <br />
-            <style jsx>{`
+                {award.summary && (
+                  <div
+                    className="prose max-w-none mt-2"
+                    style={{ fontSize, color: textColor, lineHeight }}
+                    dangerouslySetInnerHTML={{ __html: award.summary }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          <style jsx>{`
         .prose * {
           margin: 0;
           padding: 0;
@@ -158,7 +159,9 @@ const AwardSectionPreview = ({ resume }: Props) => {
         }
       `}</style>
         </div>
-    )
+      ) : null}
+    </>
+  )
 }
 
 export default AwardSectionPreview

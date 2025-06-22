@@ -17,7 +17,7 @@ const BassicSectionForm = ({ }: Props) => {
 
             <div className="flex gap-6 py-4 ">
                 <Avatar className={cn("h-16 w-16")}>
-                    <AvatarImage src={"https://github.com/shadcn.png"} />
+                    <AvatarImage src={"https://res.cloudinary.com/du6xkfnmo/image/upload/v1750562391/me_dvhsdu.jpg"} />
                 </Avatar>
                 <div className="w-full flex flex-col gap-2">
                     <span className="text-gray-400 font-medium">Picture</span>

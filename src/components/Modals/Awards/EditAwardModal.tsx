@@ -181,7 +181,7 @@ const EditAwardModal = ({
                         className="mt-2 bg-primary hover:bg-primary/90 text-white cursor-pointer"
                         disabled={isPending}
                     >
-                        {isPending ? "Adding..." : "Add Award"}
+                        {isPending ? "Saving..." : "Save"}
                     </Button>
                 </form>
             </DialogContent>
